@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "612759954483",
+    "project_id": "samaj-app-6cf32",
+    "storage_bucket": "samaj-app-6cf32.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612759954483:android:ae76c6dee05c4eeafeaf46",
+        "android_client_info": {
+          "package_name": "com.example.samajapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlVpAyg-quguEPkGuVVGPxkRe3PIrvYcQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
