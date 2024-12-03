@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class NotificationController extends GetxController {
   var notificationList = {}.obs;
   var isLoading = true.obs;
+  var selectedIndex = <int>[].obs;
   void onInit() {
     super.onInit();
    fetchNotificationList();

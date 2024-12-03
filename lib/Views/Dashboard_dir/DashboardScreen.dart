@@ -28,7 +28,6 @@ class DashboardScreen extends StatelessWidget {
         title: 'Dashboard',
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 3),
         height: mySize.height,
         width: mySize.width,
         child: GetBuilder<Homecontroller>(builder: (hc) {
@@ -54,7 +53,8 @@ class DashboardScreen extends StatelessWidget {
                             itemCount: hc.AdvertiseHomeList.length,
                             itemBuilder: (context, index, realIndex) {
                               return Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 2),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 10),
                                 child: Container(
                                   width: mySize.width,
                                   child: hc.AdvertiseHomeList[index]
@@ -65,7 +65,7 @@ class DashboardScreen extends StatelessWidget {
                                               ['video'])
                                       : ClipRRect(
                                           borderRadius:
-                                              BorderRadius.circular(10),
+                                              BorderRadius.circular(15),
                                           child: CachedNetworkImage(
                                             errorWidget: (b, o, s) {
                                               return Center(
@@ -82,7 +82,14 @@ class DashboardScreen extends StatelessWidget {
                                           ),
                                         ),
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(9),
+                                    borderRadius: BorderRadius.circular(15),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          blurRadius: 3,
+                                          color: Colors.grey,
+                                          spreadRadius: 0.01)
+                                    ],
+                                    //color: Colors.red
                                   ),
                                 ),
                               );
@@ -92,7 +99,7 @@ class DashboardScreen extends StatelessWidget {
                               onPageChanged: (page, o) {
                                 hc.Adver.value = page;
                               },
-                              viewportFraction: 1,
+                              viewportFraction: 0.9,
                               autoPlay: true,
                               height: mySize.height / 4,
                               scrollDirection: Axis.horizontal,
@@ -124,180 +131,342 @@ class DashboardScreen extends StatelessWidget {
                             }),
                           )
                         : SizedBox(),
-                    hc.donationHomeList.length != 0
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              DataText(
-                                text: ' Donations',
-                                fontSize: 20,
+                    Column(
+                      children: [
+                        hc.donationHomeList.length != 0
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  DataText(
+                                    text: ' Donations',
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      Get.dialog(Center(
+                                        child: myCircular(),
+                                      ));
+                                      try {
+                                        await hc.fetchDonationData();
+                                      } finally {
+                                        Get.back();
+                                      }
+                                      Get.to(() => DonationView());
+                                    },
+                                    child: DataText(
+                                      text: 'See All  ',
+                                      fontSize: 14,
+                                      color: Green,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : SizedBox(),
+                        hc.donationHomeList.length != 0
+                            ? CarouselSlider.builder(
+                                itemBuilder: (context, index, real) {
+                                  return Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 10),
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 10),
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.grey.shade300,
+                                                blurRadius: 5,
+                                                spreadRadius: 0.1)
+                                          ],
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Center(
+                                            child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: CachedNetworkImage(
+                                                  errorWidget: (b, o, s) {
+                                                    return Icon(
+                                                      Icons.account_circle,
+                                                      size: 30,
+                                                    );
+                                                  },
+                                                  imageUrl:
+                                                      hc.donationHomeList[index]
+                                                          ['profile_pic'],
+                                                  height: double.infinity,
+                                                  width: 85,
+                                                  fit: BoxFit.cover,
+                                                )),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                DataText(
+                                                  text:
+                                                      hc.donationHomeList[index]
+                                                          ['user_name'],
+                                                  fontSize: 18,
+                                                  color: Green,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                // SizedBox(
+                                                //   height: 5,
+                                                // ),
+                                                DataText(
+                                                  wantels: true,
+                                                  maxLines: 3,
+                                                  text:
+                                                      hc.donationHomeList[index]
+                                                          ['description'],
+                                                  fontSize: 16,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          hc.donationHomeList[index]
+                                                      ['event_contribution'] ==
+                                                  1
+                                              ? Center(
+                                                  child: Icon(
+                                                    Icons.card_giftcard,
+                                                    color: Green,
+                                                  ),
+                                                )
+                                              : Center(
+                                                  child: DataText(
+                                                    text: '₹' +
+                                                        hc.donationHomeList[
+                                                                index]['amount']
+                                                            .toString(),
+                                                    fontSize: 17,
+                                                    color: Green,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                )
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                itemCount: hc.donationHomeList.length,
+                                options: CarouselOptions(
+                                  autoPlayInterval: Duration(seconds: 10),
+                                  onPageChanged: (i, o) {
+                                    hc.Donat.value = i;
+                                  },
+                                  viewportFraction: 1,
+                                  autoPlay: true,
+                                  height: mySize.height / 6,
+                                  scrollDirection: Axis.horizontal,
+                                ),
+                              )
+                            : SizedBox(),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        hc.wishHomeList.length != 0
+                            ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+
+                            DataText(
+                              text: ' Wishes',
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                Get.dialog(Center(
+                                  child: myCircular(),
+                                ));
+                                try {
+                                  await hc.fetchWishList();
+                                } finally {
+                                  Get.back();
+                                }
+                                Get.to(() => WishView());
+                              },
+                              child: DataText(
+                                text: 'See All  ',
+                                fontSize: 14,
+                                color: Green,
                                 fontWeight: FontWeight.bold,
                               ),
-                              GestureDetector(
-                                onTap: () async {
-                                  Get.dialog(Center(
-                                    child: myCircular(),
-                                  ));
-                                  try {
-                                    await hc.fetchDonationData();
-                                  } finally {
-                                    Get.back();
-                                  }
-                                  Get.to(() => DonationView());
-                                },
-                                child: DataText(
-                                  text: 'See All  ',
-                                  fontSize: 14,
-                                  color: Green,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          )
-                        : SizedBox(),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    hc.donationHomeList.length != 0
-                        ? CarouselSlider.builder(
-                            itemBuilder: (context, index, real) {
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 5),
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
-                                  width: mySize.width,
-                                  decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.shade300,
-                                          blurRadius: 5,
-                                        )
-                                      ],
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          child: CachedNetworkImage(
-                                            errorWidget: (b, o, s) {
-                                              return Icon(
-                                                Icons.account_circle,
-                                                size: 30,
-                                              );
-                                            },
-                                            imageUrl: hc.donationHomeList[index]
-                                                ['profile_pic'],
-                                            height: 110,
-                                            width: 80,
-                                            fit: BoxFit.cover,
-                                          )),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
+                            ),
+                          ],
+                        )
+                            : SizedBox(),
+                        // const SizedBox(
+                        //   height: 5,
+                        // ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey.shade300,
+                                      blurRadius: 5,
+                                      spreadRadius: 0.1)
+                                ],
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10)),
+                            // color: Colors.orange,
+                            child: Column(
+                              children: [
+                                hc.wishHomeList.length != 0
+                                    ? CarouselSlider.builder(
+                                  itemBuilder: (context, index, real) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 15),
+                                      child: SizedBox(
+                                        width: mySize.width,
+                                        child: Row(
+                                          //mainAxisSize: MainAxisSize.min,
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          CrossAxisAlignment.center,
                                           children: [
-                                            DataText(
-                                              text: hc.donationHomeList[index]
-                                                  ['user_name'],
-                                              fontSize: 18,
-                                              color: Green,
-                                              fontWeight: FontWeight.bold,
+                                            ClipRRect(
+                                                borderRadius:
+                                                BorderRadius.circular(10),
+                                                child: CachedNetworkImage(
+                                                  errorWidget: (b, o, s) {
+                                                    return Icon(
+                                                        Icons.account_circle,
+                                                        size: 30);
+                                                  },
+                                                  imageUrl:
+                                                  hc.wishHomeList[index]
+                                                  ['image'],
+                                                  height: 110,
+                                                  width: 80,
+                                                  fit: BoxFit.cover,
+                                                )),
+                                            SizedBox(
+                                              width: 10,
                                             ),
-                                            DataText(
-                                              text: hc.donationHomeList[index]
-                                                  ['description'],
-                                              fontSize: 18,
+                                            Expanded(
+                                              child: Column(
+                                                mainAxisSize:
+                                                MainAxisSize.min,
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                children: [
+                                                  DataText(
+                                                    text:
+                                                    hc.wishHomeList[index]
+                                                    ['user_name'],
+                                                    fontSize: 18,
+                                                    color: Green,
+                                                    fontWeight:
+                                                    FontWeight.bold,
+                                                  ),
+                                                  DataText(
+                                                    text: hc.wishHomeList[
+                                                    index]
+                                                    ['wishes_type'] +
+                                                        " " +
+                                                        hc.wishHomeList[index]
+                                                        ['title'],
+                                                    fontSize: 18,
+                                                  )
+                                                ],
+                                              ),
                                             )
                                           ],
                                         ),
                                       ),
-                                      hc.donationHomeList[index]
-                                                  ['event_contribution'] ==
-                                              1
-                                          ? Icon(
-                                              Icons.card_giftcard,
-                                              color: Green,
-                                            )
-                                          : DataText(
-                                              text: '₹' +
-                                                  hc.donationHomeList[index]
-                                                          ['amount']
-                                                      .toString(),
-                                              fontSize: 17,
-                                              color: Green,
-                                              fontWeight: FontWeight.w600,
-                                            )
-                                    ],
+                                    );
+                                  },
+                                  itemCount: hc.wishHomeList.length,
+                                  options: CarouselOptions(
+                                    autoPlayInterval: Duration(seconds: 10),
+                                    onPageChanged: (i, d) {
+                                      hc.Wishh.value = i;
+                                    },
+                                    viewportFraction: 1,
+                                    autoPlay: true,
+                                    height: mySize.height / 6,
+                                    scrollDirection: Axis.horizontal,
                                   ),
-                                ),
-                              );
-                            },
-                            itemCount: hc.donationHomeList.length,
-                            options: CarouselOptions(
-                              autoPlayInterval: Duration(seconds: 10),
-                              onPageChanged: (i, o) {
-                                hc.Donat.value = i;
-                              },
-                              viewportFraction: 1,
-                              autoPlay: true,
-                              height: mySize.height / 6,
-                              scrollDirection: Axis.horizontal,
+                                )
+                                    : SizedBox(),
+                              ],
                             ),
-                          )
-                        : SizedBox(),
-                    const SizedBox(
-                      height: 5,
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(
+                    // const SizedBox(
+                    //   height: 5,
+                    // ),
+
+                    const SizedBox(
                       height: 10,
                     ),
-                    hc.wishHomeList.length != 0
+                    hc.achievementrHomeList.length != 0
                         ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              DataText(
-                                text: ' Wishes',
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              GestureDetector(
-                                onTap: () async {
-                                  Get.dialog(Center(
-                                    child: myCircular(),
-                                  ));
-                                  try {
-                                    await hc.fetchWishList();
-                                  } finally {
-                                    Get.back();
-                                  }
-                                  Get.to(() => WishView());
-                                },
-                                child: DataText(
-                                  text: 'See All  ',
-                                  fontSize: 14,
-                                  color: Green,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          )
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        DataText(
+                          text: ' Achievements',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            Get.dialog(Center(
+                              child: myCircular(),
+                            ));
+                            try {
+                              await hc.fetchAchievementList();
+                            } finally {
+                              Get.back();
+                            }
+                            Get.to(() => Achievementview());
+                          },
+                          child: DataText(
+                            text: 'See All  ',
+                            fontSize: 14,
+                            color: Green,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    )
                         : SizedBox(),
                     const SizedBox(
                       height: 5,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                    hc.achievementrHomeList.length != 0
+                        ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: Container(
+                        // padding: const EdgeInsets.symmetric(
+                        //     vertical: 10,),
                         decoration: BoxDecoration(
                             boxShadow: [
                               BoxShadow(
@@ -308,273 +477,133 @@ class DashboardScreen extends StatelessWidget {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10)),
                         // color: Colors.orange,
-                        child: Column(
-                          children: [
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            hc.wishHomeList.length != 0
-                                ? CarouselSlider.builder(
-                                    itemBuilder: (context, index, real) {
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 5, vertical: 5),
-                                        child: SizedBox(
-                                          width: mySize.width,
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  child: CachedNetworkImage(
-                                                    errorWidget: (b, o, s) {
-                                                      return Icon(
-                                                          Icons.account_circle,
-                                                          size: 30);
-                                                    },
-                                                    imageUrl:
-                                                        hc.wishHomeList[index]
-                                                            ['image'],
-                                                    height: 110,
-                                                    width: 80,
-                                                    fit: BoxFit.cover,
-                                                  )),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    DataText(
-                                                      text:
-                                                          hc.wishHomeList[index]
-                                                              ['user_name'],
-                                                      fontSize: 18,
-                                                      color: Green,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                    DataText(
-                                                      text: hc.wishHomeList[
-                                                                  index]
-                                                              ['wishes_type'] +
-                                                          " " +
-                                                          hc.wishHomeList[index]
-                                                              ['title'],
-                                                      fontSize: 18,
-                                                    )
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    itemCount: hc.wishHomeList.length,
-                                    options: CarouselOptions(
-                                      autoPlayInterval: Duration(seconds: 10),
-                                      onPageChanged: (i, d) {
-                                        hc.Wishh.value = i;
-                                      },
-                                      viewportFraction: 1,
-                                      autoPlay: true,
-                                      height: mySize.height / 6,
-                                      scrollDirection: Axis.horizontal,
+                        child: CarouselSlider.builder(
+                          itemBuilder: (context, index, real) {
+                            return GestureDetector(
+                              onTap: () {
+                                Get.dialog(
+                                  AlertDialog(
+                                    backgroundColor: Colors.white,
+                                    title: Text(
+                                        hc.achievementrHomeList[index]
+                                        ['user_name']),
+                                    content: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        CachedNetworkImage(
+                                            imageUrl:
+                                            hc.achievementrHomeList[
+                                            index]['image']),
+                                        //Image.network(hc.achievementrHomeList[index]['image']),
+                                        SizedBox(height: 10),
+                                        Text(
+                                            hc.achievementrHomeList[index]
+                                            ['description']),
+                                      ],
                                     ),
-                                  )
-                                : SizedBox(),
-                          ],
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Get.back(); // To close the dialog
+                                        },
+                                        child: Text("Close"),
+                                      ),
+                                    ],
+                                  ),
+                                  barrierDismissible:
+                                  true, // Tap outside to dismiss the dialog
+                                );
+                              },
+                              child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 15),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                          child: hc.achievementrHomeList[
+                                          index]['image'] !=
+                                              ""
+                                              ? SizedBox()
+                                              : Center(
+                                            child: Icon(Icons
+                                                .image_not_supported),
+                                          ),
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                              BorderRadius.circular(
+                                                  10),
+                                              image: DecorationImage(
+                                                  image: CachedNetworkImageProvider(
+                                                      hc.achievementrHomeList[
+                                                      index]
+                                                      ['image']),
+                                                  fit: BoxFit.cover)),
+                                        ),
+                                      ),
+                                      DataText(
+                                        text:
+                                        hc.achievementrHomeList[index]
+                                        ['user_name'],
+                                        wantels: true,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Green,
+                                      ),
+                                      DataText(
+                                        text:
+                                        hc.achievementrHomeList[index]
+                                        ['description'],
+                                        fontSize: 17,
+                                        wantels: true,
+                                      )
+                                    ],
+                                  )),
+                            );
+                          },
+                          itemCount: hc.achievementrHomeList.length,
+                          options: CarouselOptions(
+                            autoPlayInterval: Duration(seconds: 10),
+                            onPageChanged: (i, o) {
+                              hc.Ach.value = i;
+                            },
+                            viewportFraction: 1,
+                            autoPlay: true,
+                            height: mySize.height / 4,
+                            scrollDirection: Axis.horizontal,
+                          ),
                         ),
                       ),
-                    ),
+                    )
+                        : SizedBox(),
                     const SizedBox(
                       height: 10,
                     ),
                     hc.achievementrHomeList.length != 0
                         ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              DataText(
-                                text: ' Achievements',
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              GestureDetector(
-                                onTap: () async {
-                                  Get.dialog(Center(
-                                    child: myCircular(),
-                                  ));
-                                  try {
-                                    await hc.fetchAchievementList();
-                                  } finally {
-                                    Get.back();
-                                  }
-                                  Get.to(() => Achievementview());
-                                },
-                                child: DataText(
-                                  text: 'See All  ',
-                                  fontSize: 14,
-                                  color: Green,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          )
-                        : SizedBox(),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    hc.achievementrHomeList.length != 0
-                        ? Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 3, horizontal: 5),
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                          hc.achievementrHomeList.length, (index) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 3),
+                          child: Obx(() {
+                            return AnimatedContainer(
+                              height: hc.Ach.value == index ? 12 : 10,
+                              width: hc.Ach.value == index ? 12 : 10,
+                              duration: Duration(milliseconds: 400),
                               decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.shade300,
-                                      blurRadius: 5,
-                                    )
-                                  ],
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10)),
-                              // color: Colors.orange,
-                              child: CarouselSlider.builder(
-                                itemBuilder: (context, index, real) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Get.dialog(
-                                        AlertDialog(
-                                          backgroundColor: Colors.white,
-                                          title: Text(
-                                              hc.achievementrHomeList[index]
-                                                  ['user_name']),
-                                          content: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              CachedNetworkImage(
-                                                  imageUrl:
-                                                      hc.achievementrHomeList[
-                                                          index]['image']),
-                                              //Image.network(hc.achievementrHomeList[index]['image']),
-                                              SizedBox(height: 10),
-                                              Text(
-                                                  hc.achievementrHomeList[index]
-                                                      ['description']),
-                                            ],
-                                          ),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Get.back(); // To close the dialog
-                                              },
-                                              child: Text("Close"),
-                                            ),
-                                          ],
-                                        ),
-                                        barrierDismissible:
-                                            true, // Tap outside to dismiss the dialog
-                                      );
-                                    },
-                                    child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 5, vertical: 5),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Expanded(
-                                              child: Container(
-                                                child: hc.achievementrHomeList[
-                                                            index]['image'] !=
-                                                        ""
-                                                    ? SizedBox()
-                                                    : Center(
-                                                        child: Icon(Icons
-                                                            .image_not_supported),
-                                                      ),
-                                                width: double.infinity,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    image: DecorationImage(
-                                                        image: CachedNetworkImageProvider(
-                                                            hc.achievementrHomeList[
-                                                                    index]
-                                                                ['image']),
-                                                        fit: BoxFit.cover)),
-                                              ),
-                                            ),
-                                            DataText(
-                                              text:
-                                                  hc.achievementrHomeList[index]
-                                                      ['user_name'],
-                                              wantels: true,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                              color: Green,
-                                            ),
-                                            DataText(
-                                              text:
-                                                  hc.achievementrHomeList[index]
-                                                      ['description'],
-                                              fontSize: 17,
-                                              wantels: true,
-                                            )
-                                          ],
-                                        )),
-                                  );
-                                },
-                                itemCount: hc.achievementrHomeList.length,
-                                options: CarouselOptions(
-                                  autoPlayInterval: Duration(seconds: 10),
-                                  onPageChanged: (i, o) {
-                                    hc.Ach.value = i;
-                                  },
-                                  viewportFraction: 1,
-                                  autoPlay: true,
-                                  height: mySize.height / 3,
-                                  scrollDirection: Axis.horizontal,
-                                ),
-                              ),
-                            ),
-                          )
-                        : SizedBox(),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    hc.achievementrHomeList.length != 0
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: List.generate(
-                                hc.achievementrHomeList.length, (index) {
-                              return Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 3),
-                                child: Obx(() {
-                                  return AnimatedContainer(
-                                    height: hc.Ach.value == index ? 12 : 10,
-                                    width: hc.Ach.value == index ? 12 : 10,
-                                    duration: Duration(milliseconds: 400),
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: hc.Ach.value == index
-                                            ? Green
-                                            : Colors.grey),
-                                  );
-                                }),
-                              );
-                            }),
-                          )
+                                  shape: BoxShape.circle,
+                                  color: hc.Ach.value == index
+                                      ? Green
+                                      : Colors.grey),
+                            );
+                          }),
+                        );
+                      }),
+                    )
                         : SizedBox(),
                     const SizedBox(
                       height: 20,

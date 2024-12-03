@@ -35,6 +35,7 @@ class DataText extends StatelessWidget {
   final bool wanttextAlign;
   final FontWeight fontWeight;
   final bool wantels;
+  final int? maxLines;
 
   const DataText({
     Key? key,
@@ -43,6 +44,7 @@ class DataText extends StatelessWidget {
     this.wanttextAlign = false,
     this.fontWeight = FontWeight.w400,
     this.color = Colors.black,
+    this.maxLines,
     this.wantels = false,
   }) : super(key: key);
 
@@ -50,6 +52,7 @@ class DataText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text == "" ? '--' : text,
+      maxLines: maxLines,
       textAlign: wanttextAlign == true ? TextAlign.left : null,
       style: GoogleFonts.dmSans(
         fontSize: fontSize,

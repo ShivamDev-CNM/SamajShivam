@@ -227,9 +227,9 @@ class ProfileScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               mynewCont(
-                                  'Family', 0, pc.currentIndex.value, false),
+                                  'Details', 0, pc.currentIndex.value, false),
                               mynewCont(
-                                  'Details', 1, pc.currentIndex.value, false),
+                                  'Family', 1, pc.currentIndex.value, false),
                               mynewCont('Contribution', 2,
                                   pc.currentIndex.value, true),
                               mynewCont(
@@ -279,7 +279,6 @@ class ProfileScreen extends StatelessWidget {
                             pc.update();
                           },
                           children: [
-                            const FamilyPage(),
                             DetailPage(
                               address: pc.profileData[0]['address'],
                               number: pc.profileData[0]['mobilenumber'],
@@ -289,6 +288,7 @@ class ProfileScreen extends StatelessWidget {
                               city: pc.profileData[0]['city_name'] ?? '--',
                               area: pc.profileData[0]['area_name'] ?? '--',
                             ),
+                            const FamilyPage(),
                             ContributionPage(),
                             MonthlyPendingData(),
                           ],
