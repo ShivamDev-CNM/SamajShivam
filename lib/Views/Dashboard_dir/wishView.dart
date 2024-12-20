@@ -9,7 +9,9 @@ import 'package:samajapp/Utils/mytxt.dart';
 
 class WishView extends StatelessWidget {
   WishView({super.key});
-Homecontroller hc = Get.find<Homecontroller>();
+
+  Homecontroller hc = Get.find<Homecontroller>();
+
   @override
   Widget build(BuildContext context) {
     var mySize = MediaQuery.sizeOf(context);
@@ -59,53 +61,67 @@ Homecontroller hc = Get.find<Homecontroller>();
                                   ],
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(10)),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: CachedNetworkImage(
-                                        errorWidget: (b, o, s) {
-                                          return Center(
-                                            child: Icon(
-                                              Icons.account_circle,
-                                              size: 30,
-                                            ),
-                                          );
-                                        },
-                                        imageUrl: d['image'],
-                                        height: 110,
-                                        width: 80,
-                                        fit: BoxFit.cover,
-                                      )),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        DataText(
-                                          text: d['user_name'],
-                                          fontSize: 18,
-                                          color: Green,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        DataText(
-                                          text: d
-                                          ['wishes_type'] +
-                                              " " +
-                                              d
-                                              ['title'],
-                                          fontSize: 18,
-                                        )
-                                      ],
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 8),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: CachedNetworkImage(
+                                          errorWidget: (b, o, s) {
+                                            return Center(
+                                              child: Icon(
+                                                Icons.account_circle,
+                                                size: 30,
+                                              ),
+                                            );
+                                          },
+                                          imageUrl: d['image'],
+                                          height: 110,
+                                          width: 80,
+                                          fit: BoxFit.cover,
+                                        )),
+                                    SizedBox(
+                                      width: 10,
                                     ),
-                                  )
-                                ],
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          DataText(
+                                            text: d['user_name'],
+                                            fontSize: 18,
+                                            color: Green,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          DataText(
+                                            text: d['wishes_type']
+
+                                            // +
+                                            // " " +
+                                            // d
+                                            // ['title']
+                                            ,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                          DataText(
+                                            text:
+                                            hc.wishHomeList[index]
+                                            ['description'],
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                            wantels: true,
+                                            maxLines: 3,
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           );

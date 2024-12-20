@@ -12,7 +12,6 @@ import 'package:samajapp/Utils/mytxt.dart';
 import 'package:samajapp/Views/Events_dir/EventDetailScreen.dart';
 
 import '../../Utils/myAppBar.dart';
-
 class EventsScreen extends StatelessWidget {
   EventsScreen({super.key});
 
@@ -258,20 +257,30 @@ class EventsScreen extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceAround,
                                         children: [
-                                          myRow(Icons.location_on_outlined,
-                                              d['address']),
+                                          myRow(iconr:Icons.location_on_outlined,
+                                             text: d['address'],
+                                              // onTap:() async {
+                                              //   final Uri url = Uri.parse(
+                                              //       'https://www.google.com/maps/dir/?api=1&destination=${Uri.encodeComponent(d['address'])}');
+                                              //   if (await canLaunchUrl(url)) {
+                                              //   await launchUrl(url, mode: LaunchMode.externalApplication);
+                                              //   } else {
+                                              //   throw 'Could not open Google Maps';
+                                              //   }
+                                              //}
+                                              ),
                                           d['from_date'] == ""
                                               ? SizedBox()
                                               : myRow(
-                                                  Icons.calendar_month_outlined,
-                                                  DateFormat('dd MMM, y')
+                                              iconr:Icons.calendar_month_outlined,
+                                                  text:DateFormat('dd MMM, y')
                                                       .format(DateTime.parse(
                                                           d['from_date']))),
                                           d['from_time'] == ""
                                               ? SizedBox()
                                               : myRow(
-                                                  Icons.watch_later_outlined,
-                                                  DateFormat('h:mma').format(
+                                              iconr:Icons.watch_later_outlined,
+                                                  text:DateFormat('h:mma').format(
                                                       DateFormat('HH:mm:ss')
                                                           .parse(
                                                               d['from_time'])))
@@ -293,30 +302,33 @@ class EventsScreen extends StatelessWidget {
   }
 }
 
-myRow(
-  IconData iconr,
-  String text,
+Widget myRow(
+{ required IconData iconr,
+  required String text, void Function()? onTap,}
 ) {
   return Flexible(
-    child: Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(
-          iconr,
-          color: Green,
-          size: 20,
-        ),
-        SizedBox(
-          width: 1,
-        ),
-        Flexible(
-          child: DataText(
-            text: text,
-            fontSize: 13,
-            wantels: true,
+    child: GestureDetector(
+      onTap:onTap,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            iconr,
+            color: Green,
+            size: 20,
           ),
-        )
-      ],
+          SizedBox(
+            width: 1,
+          ),
+          Flexible(
+            child: DataText(
+              text: text,
+              fontSize: 13,
+              wantels: true,
+            ),
+          )
+        ],
+      ),
     ),
   );
 }

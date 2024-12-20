@@ -4,4 +4,4 @@ const String PersonImg = 'assets/images/personImd.png';
 const String dashboardimg2 = 'assets/images/dashboard2img.png';
 const String event1 = 'assets/images/event1.png';
 const String event2 = 'assets/images/eventdetail.png';
-const String profilebg = 'assets/images/profilebg.png';
+const String profilebg = 'assets/images/img.png';

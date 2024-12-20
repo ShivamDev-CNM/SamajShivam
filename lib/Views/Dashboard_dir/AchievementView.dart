@@ -55,44 +55,49 @@ class Achievementview extends StatelessWidget {
                             ],
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: CachedNetworkImage(
-                                  errorWidget: (b, os, s) {
-                                    return Center(
-                                      child: Icon(Icons.image_not_supported),
-                                    );
-                                  },
-                                  imageUrl: d['image'],
-                                  height: 110,
-                                  width: 80,
-                                  fit: BoxFit.cover,
-                                )),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  DataText(
-                                    text: d['user_name'],
-                                    fontSize: 18,
-                                    color: Green,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  DataText(
-                                    text: d['description'],
-                                    fontSize: 18,
-                                  )
-                                ],
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10,vertical: 8),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: CachedNetworkImage(
+                                    errorWidget: (b, os, s) {
+                                      return Center(
+                                        child: Icon(Icons.image_not_supported),
+                                      );
+                                    },
+                                    imageUrl: d['image'],
+                                    height: 110,
+                                    width: 80,
+                                    fit: BoxFit.cover,
+                                  )),
+                              SizedBox(
+                                width: 10,
                               ),
-                            )
-                          ],
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    DataText(
+                                      text:d['user_name'],
+                                      fontSize: 18,
+                                      color: Green,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    DataText(
+                                      text: d['description'],
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      wantels: true,
+                                      maxLines: 4,
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     );

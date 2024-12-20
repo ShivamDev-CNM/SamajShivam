@@ -96,7 +96,7 @@ class ProfileScreen extends StatelessWidget {
               top: -50,
               child: Container(
                 width: mySize.width,
-                height: mySize.height / 3,
+                height: mySize.height / 2.5,
                 decoration: BoxDecoration(
                     color: Colors.greenAccent.shade400,
                     image: const DecorationImage(
@@ -157,7 +157,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 200,
+              top: 250,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 height: mySize.height,
@@ -300,7 +300,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: mySize.height / 8.5,
+              top: mySize.height / 6,
               left: mySize.width / 3.3,
               child: Hero(
                 tag: 123,
@@ -1047,6 +1047,20 @@ class DetailPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               DataText(
+                text: 'Contact : ',
+                fontSize: 17,
+                color: Green,
+                fontWeight: FontWeight.bold,
+              ),
+              DataText(
+                text: number,
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              DataText(
                 text: 'Address : ',
                 fontSize: 17,
                 color: Green,
@@ -1110,20 +1124,6 @@ class DetailPage extends StatelessWidget {
               ),
               DataText(
                 text: country,
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              DataText(
-                text: 'Contact : ',
-                fontSize: 17,
-                color: Green,
-                fontWeight: FontWeight.bold,
-              ),
-              DataText(
-                text: number,
                 fontSize: 15,
                 fontWeight: FontWeight.w500,
               ),

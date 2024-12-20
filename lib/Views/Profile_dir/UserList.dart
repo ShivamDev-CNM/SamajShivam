@@ -35,7 +35,7 @@ class UserList extends StatelessWidget {
         backgroundColor: Green,
       ),
       appBar: CustomAppBar(
-        title: 'My User',
+        title: 'My Family Member',
         wantBackButton: true,
       ),
       body: SizedBox(

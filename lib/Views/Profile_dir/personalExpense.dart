@@ -86,10 +86,13 @@ class Monthly1 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomYearPicker(
-              myFunc: pf.fetchAllPayment,
-              // Pass the function reference
-              selectedDate: pf.selectedDate,
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: CustomYearPicker(
+                myFunc: pf.fetchAllPayment,
+                // Pass the function reference
+                selectedDate: pf.selectedDate,
+              ),
             )
           ],
         ),
@@ -175,10 +178,13 @@ class Monthly extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomYearPicker(
-              myFunc: pf.fetchAllPayment,
-              // Pass the function reference
-              selectedDate: pf.selectedDate,
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: CustomYearPicker(
+                myFunc: pf.fetchAllPayment,
+                // Pass the function reference
+                selectedDate: pf.selectedDate,
+              ),
             )
           ],
         ),
@@ -198,7 +204,7 @@ class Monthly extends StatelessWidget {
 
                   return Padding(
                     padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
                     child: Container(
                       width: mySize.width,
                       decoration: BoxDecoration(
@@ -276,10 +282,13 @@ class Monthly2 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomYearPicker(
-              myFunc: pf.fetchAllPayment,
-              // Pass the function reference
-              selectedDate: pf.selectedDate,
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: CustomYearPicker(
+                myFunc: pf.fetchAllPayment,
+                // Pass the function reference
+                selectedDate: pf.selectedDate,
+              ),
             )
           ],
         ),
@@ -299,7 +308,7 @@ class Monthly2 extends StatelessWidget {
 
                   return Padding(
                     padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
                     child: Container(
                       width: mySize.width,
                       decoration: BoxDecoration(
@@ -364,10 +373,13 @@ class Monthly3 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomYearPicker(
-              myFunc: pf.fetchAllPayment,
-              // Pass the function reference
-              selectedDate: pf.selectedDate,
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: CustomYearPicker(
+                myFunc: pf.fetchAllPayment,
+                // Pass the function reference
+                selectedDate: pf.selectedDate,
+              ),
             )
           ],
         ),
@@ -387,7 +399,7 @@ class Monthly3 extends StatelessWidget {
 
                   return Padding(
                     padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
                     child: Container(
                       width: mySize.width,
                       decoration: BoxDecoration(

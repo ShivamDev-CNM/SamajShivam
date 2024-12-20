@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:readmore/readmore.dart';
 import 'package:samajapp/Controllers/HomeController.dart';
 import 'package:samajapp/Utils/Toast.dart';
 import 'package:samajapp/Utils/colors.dart';
@@ -58,65 +60,87 @@ class DonationView extends StatelessWidget {
                             ],
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: CachedNetworkImage(
-                                  errorWidget: (b, o, s) {
-                                    return Center(
-                                      child: Icon(
-                                        Icons.account_circle,
-                                        size: 30,
-                                      ),
-                                    );
-                                  },
-                                  imageUrl: d['profile_pic'],
-                                  height: 110,
-                                  width: 80,
-                                  fit: BoxFit.cover,
-                                )),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  DataText(
-                                    text: d['user_name'],
-                                    fontSize: 18,
-                                    color: Green,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  DataText(
-                                    text: d['description'],
-                                    fontSize: 18,
-                                  )
-                                ],
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8,vertical: 8),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+
+                            children: [
+                              ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: CachedNetworkImage(
+                                    errorWidget: (b, o, s) {
+                                      return Center(
+                                        child: Icon(
+                                          Icons.account_circle,
+                                          size: 30,
+                                        ),
+                                      );
+                                    },
+                                    imageUrl: d['profile_pic'],
+                                    height: 110,
+                                    width: 80,
+                                    fit: BoxFit.cover,
+                                  )),
+                              SizedBox(
+                                width: 10,
                               ),
-                            ),
-                            d['event_contribution'] == 1
-                                ? Icon(
-                                    Icons.card_giftcard,
-                                    color: Green,
-                                  )
-                                : DataText(
-                                    text: '+ ₹' +
-                                        (d['amount'].toString() == ""
-                                            ? '0'
-                                            : d['amount'].toString()),
-                                    fontSize: 17,
-                                    color: Green,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            SizedBox(
-                              width: 4,
-                            ),
-                          ],
+                              Expanded(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    DataText(
+                                      text: d['user_name'],
+                                      fontSize: 18,
+                                      color: Green,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    ReadMoreText(
+                                      d['description'],
+                                      trimLines: 3,
+                                      colorClickableText: Colors.blue,
+                                      trimMode: TrimMode.Line,
+                                      trimCollapsedText: 'Read More',
+                                      trimExpandedText: ' ...Read Less',
+                                      style: GoogleFonts.dmSans(
+                                          fontSize: 14, color: Colors.grey),
+                                      moreStyle: GoogleFonts.dmSans(
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                      lessStyle: GoogleFonts.dmSans(
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    // DataText(
+                                    //   text: d['description'],
+                                    //   fontSize: 18,
+                                    // )
+                                  ],
+                                ),
+                              ),
+                              d['event_contribution'] == 1
+                                  ? Icon(
+                                      Icons.card_giftcard,
+                                      color: Green,
+                                    )
+                                  : DataText(
+                                      text: '+ ₹' +
+                                          (d['amount'].toString() == ""
+                                              ? '0'
+                                              : d['amount'].toString()),
+                                      fontSize: 17,
+                                      color: Green,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              SizedBox(
+                                width: 4,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );

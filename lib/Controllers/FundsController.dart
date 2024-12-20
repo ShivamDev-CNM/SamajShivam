@@ -31,8 +31,17 @@ class FundsController extends GetxController {
     fetchAdverList();
     isCalled(false);
   }
-
   ScrollController sc = ScrollController();
+  void scrollToIndex(int index) {
+    // Calculate the scroll position based on the index
+    double scrollPosition = index * (150 + 10); // Assuming 150 is the container width and 10 is the SizedBox width
+    sc.animateTo(
+      scrollPosition,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
   RxInt currentIndex = 0.obs;
   PageController pg = PageController();
 

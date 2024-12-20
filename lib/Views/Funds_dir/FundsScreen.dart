@@ -112,27 +112,27 @@ class _FundsScreenState extends State<FundsScreen> {
                 child: GetBuilder<FundsController>(builder: (fc) {
                   return Row(
                     children: [
-                      myContainer('Community\nFunds', 0),
+                      myContainer('Community\nFunds', 0,0),
                       SizedBox(
                         width: 10,
                       ),
-                      myContainer('Monthly\nContributions', 1),
+                      myContainer('Monthly\nContributions', 1,1),
                       SizedBox(
                         width: 10,
                       ),
-                      myContainer('Expenses', 2),
+                      myContainer('Expenses', 2,2),
                       SizedBox(
                         width: 10,
                       ),
-                      myContainer('Donations', 3),
+                      myContainer('Donations', 3,3),
                       SizedBox(
                         width: 10,
                       ),
-                      myContainer('Sponsorships', 4),
+                      myContainer('Sponsorships', 4,4),
                       SizedBox(
                         width: 10,
                       ),
-                      myContainer('Advertisements', 5),
+                      myContainer('Advertisements', 5,5),
                       SizedBox(
                         width: 10,
                       ),
@@ -167,11 +167,12 @@ class _FundsScreenState extends State<FundsScreen> {
   }
 }
 
-myContainer(String text, int Index) {
+Widget myContainer(String text, int Index,int scrollIndex) {
   FundsController fc = Get.find<FundsController>();
 
   return GestureDetector(
     onTap: () {
+      fc.scrollToIndex(scrollIndex);
       fc.currentIndex.value = Index;
       fc.pg.jumpToPage(fc.currentIndex.value);
       fc.update();

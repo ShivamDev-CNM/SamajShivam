@@ -75,7 +75,7 @@ class CustomYearPicker extends StatelessWidget {
           await fc.CommonYearPicker(selectedDate, myFunc);
         },
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 4),
+          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
           decoration: BoxDecoration(
             color: Color.fromRGBO(255, 255, 255, 1),
             borderRadius: BorderRadius.circular(5),
