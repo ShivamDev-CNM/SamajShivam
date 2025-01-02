@@ -9,7 +9,6 @@ import 'package:samajapp/Utils/Toast.dart';
 import 'package:samajapp/Utils/colors.dart';
 import 'package:samajapp/Utils/images.dart';
 import 'package:samajapp/Utils/mytxt.dart';
-import 'package:samajapp/Views/Profile_dir/Addfamily.dart';
 import 'package:samajapp/Views/Profile_dir/UpdateProfileScreen.dart';
 import 'package:samajapp/Views/Profile_dir/UserList.dart';
 import 'package:samajapp/Views/Profile_dir/personalExpense.dart';
@@ -1041,6 +1040,7 @@ class DetailPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
+        width: double.infinity,
         padding: EdgeInsets.symmetric(horizontal: 5),
         child: SingleChildScrollView(
           child: Column(

@@ -112,27 +112,27 @@ class _FundsScreenState extends State<FundsScreen> {
                 child: GetBuilder<FundsController>(builder: (fc) {
                   return Row(
                     children: [
-                      myContainer('Community\nFunds', 0,0),
+                      myContainer('Community\nFunds', 0, 0),
                       SizedBox(
                         width: 10,
                       ),
-                      myContainer('Monthly\nContributions', 1,1),
+                      myContainer('Monthly\nContributions', 1, 1),
                       SizedBox(
                         width: 10,
                       ),
-                      myContainer('Expenses', 2,2),
+                      myContainer('Expenses', 2, 2),
                       SizedBox(
                         width: 10,
                       ),
-                      myContainer('Donations', 3,3),
+                      myContainer('Donations', 3, 3),
                       SizedBox(
                         width: 10,
                       ),
-                      myContainer('Sponsorships', 4,4),
+                      myContainer('Sponsorships', 4, 4),
                       SizedBox(
                         width: 10,
                       ),
-                      myContainer('Advertisements', 5,5),
+                      myContainer('Advertisements', 5, 5),
                       SizedBox(
                         width: 10,
                       ),
@@ -167,7 +167,7 @@ class _FundsScreenState extends State<FundsScreen> {
   }
 }
 
-Widget myContainer(String text, int Index,int scrollIndex) {
+Widget myContainer(String text, int Index, int scrollIndex) {
   FundsController fc = Get.find<FundsController>();
 
   return GestureDetector(
@@ -565,11 +565,10 @@ class Donations extends StatelessWidget {
                                           color: Green,
                                         )
                                       : DataText(
-                                    text: "+" " ₹" +
-                                        " " +
-                                        NumberFormat('##,##,##,##,###')
-                                            .format(d[
-                                        'amount']),
+                                          text: "+" " ₹" +
+                                              " " +
+                                              NumberFormat('##,##,##,##,###')
+                                                  .format(d['amount']),
                                           //text: '+ ₹' + d['amount'].toString(),
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -693,16 +692,14 @@ class Donations extends StatelessWidget {
                                   ),
                                 ),
                                 DataText(
-                                  text: "+" " ₹" +
-                                      " " +
-                                      NumberFormat('##,##,##,##,###')
-                                          .format(d[
-                                      'amount']),
-                                  //text: '+ ₹' + d['amount'].toString(),
+                                  text: d['amount'] is num
+                                      ? "+ ₹ " + NumberFormat('##,##,##,##,###').format(d['amount'])
+                                      : "+ ₹ 0", // Provide a fallback for invalid or empty values
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   color: Green,
                                 ),
+
                               ],
                             ),
                             myPhoneDate(
@@ -967,16 +964,14 @@ class ExpensesScreen extends StatelessWidget {
                                         DataText(
                                           text: "-" " ₹" +
                                               " " +
-                                              NumberFormat('##,##,##,##,###')
-                                                  .format(d[
-                                                      'total_expence_amount']),
-                                          // text: '- ₹' +
-                                          //     d['total_expence_amount']
-                                          //         .toString(),
+                                              NumberFormat('##,##,##,##,###').format(
+                                                double.tryParse(d['total_expence_amount'].toString()) ?? 0,
+                                              ),
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.red,
                                         ),
+
                                       ],
                                     ),
                                     fromDateToDate(
@@ -1037,8 +1032,7 @@ class ExpensesScreen extends StatelessWidget {
                                   text: "-" " ₹" +
                                       " " +
                                       NumberFormat('##,##,##,##,###')
-                                          .format(d[
-                                      'amount']),
+                                          .format(d['amount']),
                                   //text: '- ₹' + d['amount'].toString(),
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -1128,8 +1122,7 @@ class SponsorShipList extends StatelessWidget {
                                   text: "+" " ₹" +
                                       " " +
                                       NumberFormat('##,##,##,##,###')
-                                          .format(d[
-                                      'amount']),
+                                          .format(d['amount']),
                                   //text: '+ ₹' + d['amount'].toString(),
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -1244,8 +1237,7 @@ class AdvertisList extends StatelessWidget {
                                     text: "+" " ₹" +
                                         " " +
                                         NumberFormat('##,##,##,##,###')
-                                            .format(d[
-                                        'amount']),
+                                            .format(d['amount']),
                                     //text: '+ ₹' + d['amount'].toString(),
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -1266,10 +1258,10 @@ class AdvertisList extends StatelessWidget {
                                   mobile: d['to_date'], date: d['from_date']),
                               fc.myBools[index] == true
                                   ? DataText(
-                                      text: '      All Users:',
+                                      text: '      All Users :-',
                                       fontSize: 13,
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w800,
                                     )
                                   : SizedBox(),
                               fc.myBools[index] == true
@@ -1286,6 +1278,26 @@ class AdvertisList extends StatelessWidget {
                                       ]),
                                     )
                                   : SizedBox(),
+                              fc.myBools[index] == true? SizedBox(height: 8,):SizedBox(),
+                              fc.myBools[index] == true
+                                  ? DataText(
+                                      text: '      Description :-',
+                                      fontSize: 13,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w800,
+                                    )
+                                  : SizedBox(),
+                              fc.myBools[index] == true
+                                  ? Padding(
+                                    padding: EdgeInsets.only(left: 19),
+                                    child: DataText(
+                                        text: "${d["description"]}",
+                                        fontSize: 13,
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                  )
+                                  : SizedBox()
                             ],
                           ),
                         ),

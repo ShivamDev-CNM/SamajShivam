@@ -61,7 +61,7 @@ class UserList extends StatelessWidget {
                     var d = pc.userList[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 5),
+                          vertical: 8, horizontal: 15),
                       child: InkWell(
                         onTap: () {
                           pc.showDetail3[index] = !pc.showDetail3[index];
@@ -73,7 +73,7 @@ class UserList extends StatelessWidget {
                           decoration: BoxDecoration(
                               color: d['earning_member'] == 1
                                   ? Colors.white
-                                  : Colors.orange.shade100,
+                                  : Colors.grey.shade300,
                               boxShadow: const [
                                 BoxShadow(color: Colors.grey, blurRadius: 1)
                               ],

@@ -13,6 +13,7 @@ class Homecontroller extends GetxController {
     Loading(true);
     fetchTreeAPI();
     fetchEntireHomeData();
+    fetchContactUs();
   }
 
   fetchEntireHomeData() async {
@@ -30,6 +31,20 @@ class Homecontroller extends GetxController {
   RxInt Donat = 0.obs;
   RxInt Wishh = 0.obs;
   RxInt Ach = 0.obs;
+
+  var contactUs = {}.obs;
+
+  Future<void> fetchContactUs() async {
+    final response =
+        await http.get(Uri.parse(myApi.BaseUrl + "/api/contact_us"));
+    if (response.statusCode == 200) {
+      final jsonData = jsonDecode(response.body);
+      contactUs.assignAll(jsonData);
+      print("mihir pansuriyqa${response.body}");
+    } else {
+      print(response.body);
+    }
+  }
 
   var AdvertiseHomeList = [].obs;
 

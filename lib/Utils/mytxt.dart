@@ -57,6 +57,7 @@ class DataText extends StatelessWidget {
       style: GoogleFonts.dmSans(
         fontSize: fontSize,
         color: color,
+
         fontWeight: fontWeight,
         textStyle:
             TextStyle(overflow: wantels == true ? TextOverflow.ellipsis : null),

@@ -229,6 +229,7 @@ class FundsController extends GetxController {
         for (int i = 0; i < AdverList.length; i++) {
           myBools.add(false);
         }
+        print(response.body);
       } else if (response.statusCode == 407) {
         await RemoveUser();
       } else {

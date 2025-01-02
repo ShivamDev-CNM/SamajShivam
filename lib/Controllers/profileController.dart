@@ -44,28 +44,36 @@ class ProfileController extends GetxController {
 
   ScrollController profileScroll = ScrollController();
   ScrollController expenseScroll = ScrollController();
+  //var isNotification = false.obs; // Badge visibility controller
 
-  fetchProfileData() async {
+  Future<void> fetchProfileData() async {
     try {
+      // Clear previous data
       showDetail.clear();
       ContributionData.clear();
       MonthlyPending.clear();
       profileData.clear();
       showDetail2.clear();
       parentData.clear();
-      String accessToken = await getShared();
-      final response = await http.get(Uri.parse(myApi.ProfileAPI),
-          headers: {'x-api-key': accessToken});
 
-      final jsonData = jsonDecode(response.body);
-      print(response.statusCode.toString());
+      String accessToken = await getShared();
+      final response = await http.get(
+        Uri.parse(myApi.ProfileAPI),
+        headers: {'x-api-key': accessToken},
+      );
+
       if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body);
+
+        // Assigning data
         profileData.assignAll(jsonData['data']);
         parentData = jsonData['family_tree'];
         MonthlyPending.assignAll(jsonData['monthly_pending_data']);
-
         ContributionData.assignAll(jsonData['contribution_data']);
 
+        // Setting the badge visibility
+        //isNotification.value = jsonData['is_notification'] == 1;
+        print("mihir${jsonData['is_notification']}");
         for (int i = 0; i < parentData['wife_brother_sister'].length; i++) {
           showDetail.add(false);
         }
@@ -76,22 +84,14 @@ class ProfileController extends GetxController {
       } else if (response.statusCode == 407) {
         await RemoveUser();
       } else {
-        showDetail.clear();
-        showDetail2.clear();
+        // Clear data on failure
         profileData.clear();
-        MonthlyPending.clear();
-
-        parentData.clear();
-        ContributionData.clear();
+        //isNotification.value = false;
       }
     } catch (e) {
       print(e.toString());
-      showDetail.clear();
-      showDetail2.clear();
       profileData.clear();
-      parentData.clear();
-      MonthlyPending.clear();
-      ContributionData.clear();
+      //isNotification.value = false;
     } finally {
       update();
     }
@@ -478,8 +478,8 @@ class ProfileController extends GetxController {
 
       request.fields['first_name'] = userFirstName.text.toString();
       request.fields['last_name'] = userLastName.text.toString();
-     // request.fields['father_id'] = father_id.value.toString();
-     // request.fields['mother_id'] = mother_id.value.toString();
+      // request.fields['father_id'] = father_id.value.toString();
+      // request.fields['mother_id'] = mother_id.value.toString();
       request.fields['relation'] = userRelation.value.toString();
       request.fields['earning_member'] = isEarning.value.toString();
       request.fields['gender'] = gender.value.toString();
@@ -507,10 +507,11 @@ class ProfileController extends GetxController {
 
       if (response.statusCode == 200) {
         ToastUtils().showCustom('Member Added');
-        clearUserAddFields();
+
         await fetchProfileData();
         await fetchUserList();
         Get.back();
+        clearUserAddFields();
       } else {
         ToastUtils().showCustom('Failed to add member');
       }

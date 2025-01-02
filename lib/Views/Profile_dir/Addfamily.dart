@@ -22,6 +22,10 @@ class AddFamilyScreen extends StatelessWidget {
     var mySize = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: CustomAppBar(
+        onPressed: (){
+          Get.back();
+          pc.clearUserAddFields();
+        },
         title: 'Add Family',
         wantBackButton: true,
       ),
@@ -272,36 +276,41 @@ class AddFamilyScreen extends StatelessWidget {
                     // visible: pc.selectTimeDuration.value == "" ? false : true,
                   );
                 }),
-                Obx(() {
-                  return ReusableDropdownSearch(
-                    validator: pc.isEarning.value == '2'
-                        ? null
-                        : (val) {
-                            if (val == null) {
-                              return 'This field is required';
-                            }
-                            return null;
-                          },
-                    onChanged: (val) async {
-                      pc.userOccupation.value = pc.occupationList
-                          .firstWhere((element) => element['name'] == val)['id']
-                          .toString();
-                    },
-                    selectedItem: pc.userOccupation.value == ""
-                        ? null
-                        : pc.occupationList.firstWhere((element) =>
-                            element['id'].toString() ==
-                            pc.userOccupation.value)['name'],
-                    searchHint: 'Search Occupation',
-                    dropHint: 'Select Occupation',
-                    myList: pc.occupationList
-                        .map((element) => element['name'].toString())
-                        .toList(),
-                    OnTap: () async {
-                      pc.userOccupation.value = '';
-                    },
-                    // visible: pc.selectTimeDuration.value == "" ? false : true,
-                  );
+               Obx(() {
+                 if( pc.isEarning.value == '1'){
+                   return ReusableDropdownSearch(
+                     validator: pc.isEarning.value == '2'
+                         ? null
+                         : (val) {
+                       if (val == null) {
+                         return 'This field is required';
+                       }
+                       return null;
+                     },
+                     onChanged: (val) async {
+                       pc.userOccupation.value = pc.occupationList
+                           .firstWhere((element) => element['name'] == val)['id']
+                           .toString();
+                     },
+                     selectedItem: pc.userOccupation.value == ""
+                         ? null
+                         : pc.occupationList.firstWhere((element) =>
+                     element['id'].toString() ==
+                         pc.userOccupation.value)['name'],
+                     searchHint: 'Search Occupation',
+                     dropHint: 'Select Occupation',
+                     myList: pc.occupationList
+                         .map((element) => element['name'].toString())
+                         .toList(),
+                     OnTap: () async {
+                       pc.userOccupation.value = '';
+                     },
+                     // visible: pc.selectTimeDuration.value == "" ? false : true,
+                   );
+                 }else{
+                   return SizedBox();
+                 }
+
                 }),
                 Obx(() {
                   return myTextField(

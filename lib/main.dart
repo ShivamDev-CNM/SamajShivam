@@ -35,6 +35,7 @@ void main() async {
 
   Get.put(SplashScreenController());
   Get.put(ProfileController());
+  Get.put(Homecontroller());
   runApp(MyApp());
 }
 
@@ -52,6 +53,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     _notificationServices.requestNotificationPermission();
     _notificationServices.firebaseInit(context);
     _notificationServices.setupInteractMessage(context);

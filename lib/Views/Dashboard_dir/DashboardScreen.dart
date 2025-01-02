@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:samajapp/Controllers/HomeController.dart';
 import 'package:samajapp/Controllers/profileController.dart';
@@ -27,6 +28,8 @@ class DashboardScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Dashboard',
+
+
       ),
       body: Container(
         height: mySize.height,
@@ -84,6 +87,7 @@ class DashboardScreen extends StatelessWidget {
                                         ),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
+                                    color: Colors.white,
                                     boxShadow: [
                                       BoxShadow(
                                           blurRadius: 3,
@@ -451,7 +455,7 @@ class DashboardScreen extends StatelessWidget {
                                                             BorderRadius
                                                                 .circular(10),
                                                         child:
-                                                        CachedNetworkImage(
+                                                            CachedNetworkImage(
                                                           errorWidget:
                                                               (b, o, s) {
                                                             return Icon(
@@ -612,10 +616,17 @@ class DashboardScreen extends StatelessWidget {
                                           content: Column(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              CachedNetworkImage(
+                                              Container(
+                                                height: 300,
+                                                width: double.infinity,
+                                                color: Colors.red,
+                                                child: CachedNetworkImage(
                                                   imageUrl:
                                                       hc.achievementrHomeList[
-                                                          index]['image']),
+                                                          index]['image'],
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
                                               //Image.network(hc.achievementrHomeList[index]['image']),
                                               SizedBox(height: 10),
                                               Text(
@@ -628,7 +639,13 @@ class DashboardScreen extends StatelessWidget {
                                               onPressed: () {
                                                 Get.back(); // To close the dialog
                                               },
-                                              child: Text("Close"),
+                                              child: Text(
+                                                "Close",
+                                                style: GoogleFonts.dmSans(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 18,
+                                                    color: AppBarColor),
+                                              ),
                                             ),
                                           ],
                                         ),

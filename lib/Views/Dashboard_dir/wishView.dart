@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:readmore/readmore.dart';
 import 'package:samajapp/Controllers/HomeController.dart';
 import 'package:samajapp/Utils/Toast.dart';
 import 'package:samajapp/Utils/colors.dart';
@@ -108,15 +110,34 @@ class WishView extends StatelessWidget {
                                             fontSize: 16,
                                             fontWeight: FontWeight.w600,
                                           ),
-                                          DataText(
-                                            text:
+                                          ReadMoreText(
                                             hc.wishHomeList[index]
                                             ['description'],
-                                            fontSize: 14,
-                                            color: Colors.black,
-                                            wantels: true,
-                                            maxLines: 3,
+                                            trimLines: 3,
+                                            colorClickableText: Colors.blue,
+                                            trimMode: TrimMode.Line,
+                                            trimCollapsedText: 'Read More',
+                                            trimExpandedText: ' ...Read Less',
+                                            style: GoogleFonts.dmSans(
+                                                fontSize: 14, color: Colors.black),
+                                            moreStyle: GoogleFonts.dmSans(
+                                                fontSize: 14,
+                                                color: Green,
+                                                fontWeight: FontWeight.bold),
+                                            lessStyle: GoogleFonts.dmSans(
+                                                fontSize: 14,
+                                                color: Green,
+                                                fontWeight: FontWeight.bold),
                                           ),
+                                          // DataText(
+                                          //   text:
+                                          //   hc.wishHomeList[index]
+                                          //   ['description'],
+                                          //   fontSize: 14,
+                                          //   color: Colors.black,
+                                          //   wantels: true,
+                                          //   maxLines: 8,
+                                          // ),
                                         ],
                                       ),
                                     )

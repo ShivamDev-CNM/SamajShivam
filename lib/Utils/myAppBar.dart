@@ -1,6 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:samajapp/Controllers/HomeController.dart';
 import 'package:samajapp/Controllers/profileController.dart';
 import 'package:samajapp/Utils/Toast.dart';
 import 'package:samajapp/Utils/mytxt.dart';
@@ -8,9 +12,12 @@ import 'package:samajapp/Views/Notification_Page/notification_screen.dart';
 import 'package:samajapp/Views/Profile_dir/ProfileScreen.dart';
 import 'package:badges/badges.dart' as badges;
 import '../Views/Notification_Page/notification_controller.dart';
+import 'colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   ProfileController pc = Get.find<ProfileController>();
+  Homecontroller homecontroller = Get.find<Homecontroller>();
+
   final NotificationController controller = Get.find<NotificationController>();
 
   CustomAppBar(
@@ -18,15 +25,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       required this.title,
       this.wantBackButton = false,
       this.wantTextWhite = true,
+      this.onPressed,
+      this.widget,
       this.wantbell = true});
 
   final String title;
   final bool wantBackButton;
   final wantTextWhite;
   final wantbell;
+  final void Function()? onPressed;
+  final List<Widget>? widget;
 
   @override
   Widget build(BuildContext context) {
+    var d = homecontroller.contactUs["data"];
     return AppBar(
       title: DataText(
         text: title,
@@ -37,9 +49,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leadingWidth: 55,
       leading: wantBackButton == true
           ? IconButton(
-              onPressed: () {
-                Get.back();
-              },
+              onPressed: onPressed ??
+                  () {
+                    Get.back();
+                  },
               icon: Icon(
                 Icons.arrow_back_ios_new,
                 color: Colors.white,
@@ -91,28 +104,166 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
       actions: [
+        GestureDetector(
+          onTap: () {
+            Get.dialog(
+              AlertDialog(
+                backgroundColor: Colors.white,
+                title: Text(
+                  d["name"].toString(),
+                  style: GoogleFonts.dmSans(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600),
+                ),
+                content: Container(
+                  height: 60,
+                  //color: Colors.red,
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        // onTap: () {
+                        //   _openGmail();
+                        // },
+                        onTap: () async {
+                          final email = d["email"];
+                          final Uri emailUri = Uri(
+                            scheme: 'mailto',
+                            path: email,
+                          );
+
+                          if (await canLaunchUrl(emailUri)) {
+                            await launchUrl(emailUri);
+                          } else {
+                            Get.snackbar(
+                              'Error',
+                              'Could not open email client',
+                              snackPosition: SnackPosition.BOTTOM,
+                            );
+                          }
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.email_outlined,
+                              color: Colors.black,
+                              size: 25,
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              d["email"],
+                              style: GoogleFonts.dmSans(
+                                  color: Colors.blue,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w800),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          final phoneNumber = d["phone"];
+                          final Uri phoneUri =
+                              Uri(scheme: 'tel', path: phoneNumber);
+
+                          if (await canLaunchUrl(phoneUri)) {
+                            await launchUrl(phoneUri);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content:
+                                      Text('Could not launch $phoneNumber')),
+                            );
+                          }
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.phone,
+                              color: Colors.black,
+                              size: 25,
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              d["phone"] ?? "No Number",
+                              style: GoogleFonts.dmSans(
+                                color: Colors.blue,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                    },
+                    child: Text(
+                      'Close',
+                      style: GoogleFonts.dmSans(color: Green),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+          child: Image.asset(
+            "assets/contact_us.png",
+            color: Colors.white,
+            width: 28,
+          ),
+        ),
         wantbell == true
             ? Obx(() {
-                // Check if the data is null or empty
-                final notifications = controller.notificationList["data"];
-                return badges.Badge(
-                  position: badges.BadgePosition.topEnd(top: 14, end: 14),
-                  showBadge: notifications != null && notifications.isNotEmpty,
-                  // badgeContent: Text(
-                  //   notifications != null
-                  //       ? notifications.length.toString()
-                  //       : '0',
-                  //   style: TextStyle(color: Colors.white),
-                  // ),
-                  child: IconButton(
-                    onPressed: () {
-                      Get.to(NotificationScreen());
-                    },
-                    icon: const Icon(
-                      Icons.notifications_none,
-                      color: Colors.white,
-                      size: 30,
+                // Check if profileData is populated and contains 'is_notification'
+                if (pc.profileData.isNotEmpty &&
+                    pc.profileData[0].containsKey('is_notification')) {
+                  bool showBadge = pc.profileData[0]['is_notification'] == 1;
+                  return badges.Badge(
+                    position: badges.BadgePosition.topEnd(top: 14, end: 14),
+                    showBadge:
+                        showBadge, // Show badge if isNotification is true
+                    child: IconButton(
+                      onPressed: () async {
+                        // Navigate to the NotificationScreen
+                        await controller.fetchNotificationList();
+                        await Get.to(NotificationScreen());
+                        controller.selectedIndex.clear();
+                        controller.selectedIndex.refresh();
+                        controller.isFirstSelection.value = false;
+                        await pc.fetchProfileData();
+                        await controller.notificationAlertDote();
+                      },
+                      icon: const Icon(
+                        Icons.notifications_none,
+                        color: Colors.white,
+                        size: 30,
+                      ),
                     ),
+                  );
+                }
+
+                // Return a placeholder widget while profileData is empty
+                return IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.notifications_none,
+                    color: Colors.white,
+                    size: 30,
                   ),
                 );
               })

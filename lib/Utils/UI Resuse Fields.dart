@@ -213,17 +213,18 @@ class FundsRow extends StatelessWidget {
       children: [
         DataText(
           text: title+' : ',
-          fontSize: 17,
+          fontSize: 18,
           color: Green,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w500,
         ),
         Expanded(
           child: DataText(
             text: data,
             fontSize: 18,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w500,
           ),
         ),
+
       ],
     );
   }
