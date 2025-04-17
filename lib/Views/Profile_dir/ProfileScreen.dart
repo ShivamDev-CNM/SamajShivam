@@ -24,59 +24,83 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          FloatingActionButton(
-            child: Icon(
-              Icons.auto_graph_rounded,
-              color: Colors.white,
-            ),
-            onPressed: () async {
-              Get.dialog(Center(
-                child: CircularProgressIndicator(
+          Row(
+            children: [
+              FloatingActionButton(
+                child: Icon(
+                  Icons.auto_graph_rounded,
                   color: Colors.white,
-                  strokeWidth: 2,
                 ),
-              ));
-
-              try {
-                pc.type.value = '1';
-                await pc.fetchAllPayment();
-              } finally {
-                Get.back();
-              }
-
-              pc.allPayPage.value = 0;
-
-              Get.to(() => myPersonalExpense());
-            },
-            backgroundColor: Green,
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          FloatingActionButton(
-            child: Icon(
-              Icons.family_restroom,
-              color: Colors.white,
-            ),
-            onPressed: () async {
-              Get.dialog(Center(
-                child: CircularProgressIndicator(
+                onPressed: () async {
+                  Get.dialog(Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2,
+                    ),
+                  ));
+                  try {
+                    pc.type.value = '1';
+                    await pc.fetchAllPayment();
+                  } finally {
+                    Get.back();
+                  }
+                  pc.allPayPage.value = 0;
+                  Get.to(() => myPersonalExpense());
+                },
+                backgroundColor: Green,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              FloatingActionButton(
+                child: Icon(
+                  Icons.family_restroom,
                   color: Colors.white,
-                  strokeWidth: 2,
                 ),
-              ));
-
-              try {
-                await pc.fetchUserList();
-              } finally {
-                Get.back();
-              }
-
-              Get.to(() => UserList());
-            },
-            backgroundColor: Green,
+                onPressed: () async {
+                  Get.dialog(Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2,
+                    ),
+                  ));
+                  try {
+                    await pc.fetchUserList();
+                  } finally {
+                    Get.back();
+                  }
+                  Get.to(() => UserList());
+                },
+                backgroundColor: Green,
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 25),
+            child: FloatingActionButton(
+              child: Icon(
+                Icons.delete,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Get.dialog(CustomAlert(
+                    title: 'Confirm Delete',
+                    content: 'Are you sure you want to delete your account?',
+                    positiveText: 'Yes',
+                    onConfirm: () async {
+                      Get.back();
+                      Get.dialog(myCircular(), barrierDismissible: false);
+                      await Get.find<ProfileController>()
+                          .deleteAccountFunction();
+                      Get.back();
+                    },
+                    negativeText: 'No'));
+              },
+              backgroundColor: Colors.red,
+            ),
           )
         ],
       ),
@@ -96,8 +120,10 @@ class ProfileScreen extends StatelessWidget {
               child: Container(
                 width: mySize.width,
                 height: mySize.height / 2.5,
-                decoration:
-                    BoxDecoration(color: Colors.greenAccent.shade400, image: const DecorationImage(image: AssetImage(profilebg), fit: BoxFit.cover)),
+                decoration: BoxDecoration(
+                    color: Colors.greenAccent.shade400,
+                    image: const DecorationImage(
+                        image: AssetImage(profilebg), fit: BoxFit.cover)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -129,7 +155,8 @@ class ProfileScreen extends StatelessWidget {
                                 onPressed: () async {
                                   Get.dialog(CustomAlert(
                                     title: 'Confirm Log Out',
-                                    content: 'Are you sure you want to log out?',
+                                    content:
+                                        'Are you sure you want to log out?',
                                     positiveText: 'Yes',
                                     negativeText: 'No',
                                     onConfirm: () async {
@@ -158,7 +185,9 @@ class ProfileScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 height: mySize.height,
                 width: mySize.width,
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -177,7 +206,8 @@ class ProfileScreen extends StatelessWidget {
                               } finally {
                                 Get.back();
                               }
-                              pc.occupationId.value = pc.profileData[0]['occupation'].toString();
+                              pc.occupationId.value =
+                                  pc.profileData[0]['occupation'].toString();
                               pc.passvalue();
                               Get.to(() => UpdateProfileScreen());
                             },
@@ -209,7 +239,9 @@ class ProfileScreen extends StatelessWidget {
                       height: 10,
                     ),
                     Container(
-                      decoration: BoxDecoration(border: Border.all(color: Green, width: 2), borderRadius: BorderRadius.circular(10)),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Green, width: 2),
+                          borderRadius: BorderRadius.circular(10)),
                       child: GetBuilder<ProfileController>(builder: (pc) {
                         return SingleChildScrollView(
                           controller: pc.profileScroll,
@@ -217,10 +249,14 @@ class ProfileScreen extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              mynewCont('Details', 0, pc.currentIndex.value, false),
-                              mynewCont('Family', 1, pc.currentIndex.value, false),
-                              mynewCont('Contribution', 2, pc.currentIndex.value, true),
-                              mynewCont('Pending', 3, pc.currentIndex.value, true),
+                              mynewCont(
+                                  'Details', 0, pc.currentIndex.value, false),
+                              mynewCont(
+                                  'Family', 1, pc.currentIndex.value, false),
+                              mynewCont('Contribution', 2,
+                                  pc.currentIndex.value, true),
+                              mynewCont(
+                                  'Pending', 3, pc.currentIndex.value, true),
                             ],
                           ),
                         );
@@ -237,20 +273,28 @@ class ProfileScreen extends StatelessWidget {
                           onPageChanged: (index) {
                             switch (index) {
                               case 0:
-                                pc.profileScroll.animateTo(pc.profileScroll.position.minScrollExtent,
-                                    duration: Duration(milliseconds: 300), curve: Curves.linear);
+                                pc.profileScroll.animateTo(
+                                    pc.profileScroll.position.minScrollExtent,
+                                    duration: Duration(milliseconds: 300),
+                                    curve: Curves.linear);
                                 break;
                               case 1:
-                                pc.profileScroll.animateTo(pc.profileScroll.position.minScrollExtent,
-                                    duration: Duration(milliseconds: 300), curve: Curves.linear);
+                                pc.profileScroll.animateTo(
+                                    pc.profileScroll.position.minScrollExtent,
+                                    duration: Duration(milliseconds: 300),
+                                    curve: Curves.linear);
                                 break;
                               case 2:
-                                pc.profileScroll.animateTo(pc.profileScroll.position.maxScrollExtent,
-                                    duration: Duration(milliseconds: 300), curve: Curves.linear);
+                                pc.profileScroll.animateTo(
+                                    pc.profileScroll.position.maxScrollExtent,
+                                    duration: Duration(milliseconds: 300),
+                                    curve: Curves.linear);
                                 break;
                               case 3:
-                                pc.profileScroll.animateTo(pc.profileScroll.position.maxScrollExtent,
-                                    duration: Duration(milliseconds: 300), curve: Curves.linear);
+                                pc.profileScroll.animateTo(
+                                    pc.profileScroll.position.maxScrollExtent,
+                                    duration: Duration(milliseconds: 300),
+                                    curve: Curves.linear);
                                 break;
                             }
 
@@ -261,7 +305,8 @@ class ProfileScreen extends StatelessWidget {
                             DetailPage(
                               address: pc.profileData[0]['address'],
                               number: pc.profileData[0]['mobilenumber'],
-                              country: pc.profileData[0]['country_name'] ?? '--',
+                              country:
+                                  pc.profileData[0]['country_name'] ?? '--',
                               State: pc.profileData[0]['state_name'] ?? '--',
                               city: pc.profileData[0]['city_name'] ?? '--',
                               area: pc.profileData[0]['area_name'] ?? '--',
@@ -289,7 +334,10 @@ class ProfileScreen extends StatelessWidget {
                       return Container(
                         height: 150,
                         width: 150,
-                        decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle, border: Border.all(color: Green)),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Green)),
                         child: Center(
                           child: Icon(Icons.person),
                         ),
@@ -316,7 +364,10 @@ class ProfileScreen extends StatelessWidget {
                           return Container(
                             height: 150,
                             width: 150,
-                            decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle, border: Border.all(color: Green)),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                border: Border.all(color: Green)),
                             child: Center(
                               child: Icon(
                                 Icons.person,
@@ -348,8 +399,14 @@ mynewCont(
   return GestureDetector(
     onTap: () {
       want == true
-          ? pc.profileScroll.animateTo(pc.profileScroll.position.maxScrollExtent, duration: Duration(milliseconds: 300), curve: Curves.linear)
-          : pc.profileScroll.animateTo(pc.profileScroll.position.minScrollExtent, duration: Duration(milliseconds: 300), curve: Curves.linear);
+          ? pc.profileScroll.animateTo(
+              pc.profileScroll.position.maxScrollExtent,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.linear)
+          : pc.profileScroll.animateTo(
+              pc.profileScroll.position.minScrollExtent,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.linear);
 
       pc.currentIndex.value = Index;
       pc.pg.jumpToPage(
@@ -360,7 +417,9 @@ mynewCont(
     child: AnimatedContainer(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       constraints: const BoxConstraints(maxHeight: 50),
-      decoration: BoxDecoration(color: Index == myIndex ? AppBarColor : null, borderRadius: BorderRadius.circular(8)),
+      decoration: BoxDecoration(
+          color: Index == myIndex ? AppBarColor : null,
+          borderRadius: BorderRadius.circular(8)),
       duration: const Duration(milliseconds: 300),
       child: Center(
           child: DataText(
@@ -419,21 +478,32 @@ class FamilyPage extends StatelessWidget {
                           height: pc.fatherBool.value ? 120 : 50,
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 1)],
+                              boxShadow: const [
+                                BoxShadow(color: Colors.grey, blurRadius: 1)
+                              ],
                               borderRadius: BorderRadius.circular(10)),
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
                           duration: Duration(milliseconds: 500),
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
                                       child: DataText(
-                                        text: d['father'][0]['user_name'].toString() +
+                                        text: d['father'][0]['user_name']
+                                                .toString() +
                                             " - " +
-                                            (d['father'][0]['relation_name'].toString() == "" ? 'N/A' : d['father'][0]['relation_name'].toString()),
+                                            (d['father'][0]['relation_name']
+                                                        .toString() ==
+                                                    ""
+                                                ? 'N/A'
+                                                : d['father'][0]
+                                                        ['relation_name']
+                                                    .toString()),
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -448,7 +518,9 @@ class FamilyPage extends StatelessWidget {
                                               color: Colors.white,
                                               size: 15,
                                             )),
-                                    pc.fatherBool.value ? Icon(Icons.arrow_drop_up) : Icon(Icons.arrow_drop_down),
+                                    pc.fatherBool.value
+                                        ? Icon(Icons.arrow_drop_up)
+                                        : Icon(Icons.arrow_drop_down),
                                   ],
                                 ),
                                 pc.fatherBool.value == true
@@ -461,23 +533,40 @@ class FamilyPage extends StatelessWidget {
                                         children: [
                                           Row(
                                             children: [
-                                              DataText(text: ('Mobile No :'), fontSize: 15),
+                                              DataText(
+                                                  text: ('Mobile No :'),
+                                                  fontSize: 15),
                                               Expanded(child: SizedBox()),
-                                              DataText(text: (d['father'][0]['mobilenumber'].toString()), fontSize: 15),
+                                              DataText(
+                                                  text: (d['father'][0]
+                                                          ['mobilenumber']
+                                                      .toString()),
+                                                  fontSize: 15),
                                             ],
                                           ),
                                           Row(
                                             children: [
-                                              DataText(text: ('Email :'), fontSize: 15),
+                                              DataText(
+                                                  text: ('Email :'),
+                                                  fontSize: 15),
                                               Expanded(child: SizedBox()),
-                                              DataText(text: (d['father'][0]['email'].toString()), fontSize: 15),
+                                              DataText(
+                                                  text: (d['father'][0]['email']
+                                                      .toString()),
+                                                  fontSize: 15),
                                             ],
                                           ),
                                           Row(
                                             children: [
-                                              DataText(text: ('Occupation :'), fontSize: 15),
+                                              DataText(
+                                                  text: ('Occupation :'),
+                                                  fontSize: 15),
                                               Expanded(child: SizedBox()),
-                                              DataText(text: d['father'][0]['occupation_name'].toString(), fontSize: 15),
+                                              DataText(
+                                                  text: d['father'][0]
+                                                          ['occupation_name']
+                                                      .toString(),
+                                                  fontSize: 15),
                                             ],
                                           ),
                                         ],
@@ -500,21 +589,32 @@ class FamilyPage extends StatelessWidget {
                           height: pc.fatherBool.value ? 120 : 50,
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 1)],
+                              boxShadow: const [
+                                BoxShadow(color: Colors.grey, blurRadius: 1)
+                              ],
                               borderRadius: BorderRadius.circular(10)),
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
                           duration: Duration(milliseconds: 500),
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
                                       child: DataText(
-                                        text: d['mother'][0]['user_name'].toString() +
+                                        text: d['mother'][0]['user_name']
+                                                .toString() +
                                             " - " +
-                                            (d['mother'][0]['relation_name'].toString() == "" ? 'N/A' : d['mother'][0]['relation_name'].toString()),
+                                            (d['mother'][0]['relation_name']
+                                                        .toString() ==
+                                                    ""
+                                                ? 'N/A'
+                                                : d['mother'][0]
+                                                        ['relation_name']
+                                                    .toString()),
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -529,7 +629,9 @@ class FamilyPage extends StatelessWidget {
                                               color: Colors.white,
                                               size: 15,
                                             )),
-                                    pc.fatherBool.value ? Icon(Icons.arrow_drop_up) : Icon(Icons.arrow_drop_down),
+                                    pc.fatherBool.value
+                                        ? Icon(Icons.arrow_drop_up)
+                                        : Icon(Icons.arrow_drop_down),
                                   ],
                                 ),
                                 pc.fatherBool.value == true
@@ -542,23 +644,40 @@ class FamilyPage extends StatelessWidget {
                                         children: [
                                           Row(
                                             children: [
-                                              DataText(text: ('Mobile No :'), fontSize: 15),
+                                              DataText(
+                                                  text: ('Mobile No :'),
+                                                  fontSize: 15),
                                               Expanded(child: SizedBox()),
-                                              DataText(text: (d['mother'][0]['mobilenumber'].toString()), fontSize: 15),
+                                              DataText(
+                                                  text: (d['mother'][0]
+                                                          ['mobilenumber']
+                                                      .toString()),
+                                                  fontSize: 15),
                                             ],
                                           ),
                                           Row(
                                             children: [
-                                              DataText(text: ('Email :'), fontSize: 15),
+                                              DataText(
+                                                  text: ('Email :'),
+                                                  fontSize: 15),
                                               Expanded(child: SizedBox()),
-                                              DataText(text: (d['mother'][0]['email'].toString()), fontSize: 15),
+                                              DataText(
+                                                  text: (d['mother'][0]['email']
+                                                      .toString()),
+                                                  fontSize: 15),
                                             ],
                                           ),
                                           Row(
                                             children: [
-                                              DataText(text: ('Occupation :'), fontSize: 15),
+                                              DataText(
+                                                  text: ('Occupation :'),
+                                                  fontSize: 15),
                                               Expanded(child: SizedBox()),
-                                              DataText(text: d['mother'][0]['occupation_name'].toString(), fontSize: 15),
+                                              DataText(
+                                                  text: d['mother'][0]
+                                                          ['occupation_name']
+                                                      .toString(),
+                                                  fontSize: 15),
                                             ],
                                           ),
                                         ],
@@ -581,10 +700,12 @@ class FamilyPage extends StatelessWidget {
                         color: Green,
                       ),
                 Column(
-                  children: List.generate(pc.parentData['wife_brother_sister'].length, (index) {
+                  children: List.generate(
+                      pc.parentData['wife_brother_sister'].length, (index) {
                     var d = pc.parentData['wife_brother_sister'][index];
                     return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 5),
                       child: InkWell(
                         onTap: () {
                           pc.showDetail[index] = !pc.showDetail[index];
@@ -595,21 +716,28 @@ class FamilyPage extends StatelessWidget {
                           height: pc.showDetail[index] ? 120 : 50,
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 1)],
+                              boxShadow: const [
+                                BoxShadow(color: Colors.grey, blurRadius: 1)
+                              ],
                               borderRadius: BorderRadius.circular(10)),
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
                           duration: Duration(milliseconds: 500),
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
                                       child: DataText(
                                         text: d['user_name'].toString() +
                                             " - " +
-                                            (d['relation_name'].toString() == "" ? 'N/A' : d['relation_name'].toString()),
+                                            (d['relation_name'].toString() == ""
+                                                ? 'N/A'
+                                                : d['relation_name']
+                                                    .toString()),
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -624,7 +752,9 @@ class FamilyPage extends StatelessWidget {
                                               color: Colors.white,
                                               size: 15,
                                             )),
-                                    pc.showDetail[index] ? Icon(Icons.arrow_drop_up) : Icon(Icons.arrow_drop_down),
+                                    pc.showDetail[index]
+                                        ? Icon(Icons.arrow_drop_up)
+                                        : Icon(Icons.arrow_drop_down),
                                   ],
                                 ),
                                 pc.showDetail[index] == true
@@ -637,23 +767,37 @@ class FamilyPage extends StatelessWidget {
                                         children: [
                                           Row(
                                             children: [
-                                              DataText(text: ('Mobile No :'), fontSize: 15),
+                                              DataText(
+                                                  text: ('Mobile No :'),
+                                                  fontSize: 15),
                                               Expanded(child: SizedBox()),
-                                              DataText(text: (d['mobilenumber'].toString()), fontSize: 15),
+                                              DataText(
+                                                  text: (d['mobilenumber']
+                                                      .toString()),
+                                                  fontSize: 15),
                                             ],
                                           ),
                                           Row(
                                             children: [
-                                              DataText(text: ('Email :'), fontSize: 15),
+                                              DataText(
+                                                  text: ('Email :'),
+                                                  fontSize: 15),
                                               Expanded(child: SizedBox()),
-                                              DataText(text: (d['email'].toString()), fontSize: 15),
+                                              DataText(
+                                                  text: (d['email'].toString()),
+                                                  fontSize: 15),
                                             ],
                                           ),
                                           Row(
                                             children: [
-                                              DataText(text: ('Occupation :'), fontSize: 15),
+                                              DataText(
+                                                  text: ('Occupation :'),
+                                                  fontSize: 15),
                                               Expanded(child: SizedBox()),
-                                              DataText(text: d['occupation_name'].toString(), fontSize: 15),
+                                              DataText(
+                                                  text: d['occupation_name']
+                                                      .toString(),
+                                                  fontSize: 15),
                                             ],
                                           ),
                                         ],
@@ -679,7 +823,8 @@ class FamilyPage extends StatelessWidget {
                   children: List.generate(c.length, (index) {
                     var d = c[index];
                     return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 5),
                       child: InkWell(
                         onTap: () {
                           pc.showDetail2[index] = !pc.showDetail2[index];
@@ -690,21 +835,28 @@ class FamilyPage extends StatelessWidget {
                           height: pc.showDetail2[index] ? 120 : 50,
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 1)],
+                              boxShadow: const [
+                                BoxShadow(color: Colors.grey, blurRadius: 1)
+                              ],
                               borderRadius: BorderRadius.circular(10)),
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
                           duration: Duration(milliseconds: 500),
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
                                       child: DataText(
                                         text: d['user_name'].toString() +
                                             " - " +
-                                            (d['relation_name'].toString() == "" ? 'N/A' : d['relation_name'].toString()),
+                                            (d['relation_name'].toString() == ""
+                                                ? 'N/A'
+                                                : d['relation_name']
+                                                    .toString()),
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -722,9 +874,11 @@ class FamilyPage extends StatelessWidget {
                                     GestureDetector(
                                         onTap: () {
                                           if (d['father_children'].isEmpty) {
-                                            ToastUtils().showCustom('No Data Found');
+                                            ToastUtils()
+                                                .showCustom('No Data Found');
                                           } else {
-                                            Get.bottomSheet(ChildresnDetails(myList: d['father_children']));
+                                            Get.bottomSheet(ChildresnDetails(
+                                                myList: d['father_children']));
                                           }
                                         },
                                         child: Icon(
@@ -732,7 +886,9 @@ class FamilyPage extends StatelessWidget {
                                           Icons.info,
                                           color: Green,
                                         )),
-                                    pc.showDetail2[index] ? Icon(Icons.arrow_drop_up) : Icon(Icons.arrow_drop_down),
+                                    pc.showDetail2[index]
+                                        ? Icon(Icons.arrow_drop_up)
+                                        : Icon(Icons.arrow_drop_down),
                                   ],
                                 ),
                                 pc.showDetail2[index] == true
@@ -745,23 +901,37 @@ class FamilyPage extends StatelessWidget {
                                         children: [
                                           Row(
                                             children: [
-                                              DataText(text: ('Mobile No :'), fontSize: 15),
+                                              DataText(
+                                                  text: ('Mobile No :'),
+                                                  fontSize: 15),
                                               Expanded(child: SizedBox()),
-                                              DataText(text: (d['mobilenumber'].toString()), fontSize: 15),
+                                              DataText(
+                                                  text: (d['mobilenumber']
+                                                      .toString()),
+                                                  fontSize: 15),
                                             ],
                                           ),
                                           Row(
                                             children: [
-                                              DataText(text: ('Email :'), fontSize: 15),
+                                              DataText(
+                                                  text: ('Email :'),
+                                                  fontSize: 15),
                                               Expanded(child: SizedBox()),
-                                              DataText(text: (d['email'].toString()), fontSize: 15),
+                                              DataText(
+                                                  text: (d['email'].toString()),
+                                                  fontSize: 15),
                                             ],
                                           ),
                                           Row(
                                             children: [
-                                              DataText(text: ('Occupation :'), fontSize: 15),
+                                              DataText(
+                                                  text: ('Occupation :'),
+                                                  fontSize: 15),
                                               Expanded(child: SizedBox()),
-                                              DataText(text: d['occupation_name'].toString(), fontSize: 15),
+                                              DataText(
+                                                  text: d['occupation_name']
+                                                      .toString(),
+                                                  fontSize: 15),
                                             ],
                                           ),
                                         ],
@@ -805,7 +975,11 @@ class ChildresnDetails extends StatelessWidget {
             var d = myList[index];
             return Container(
               decoration: BoxDecoration(
-                  color: Colors.white, boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 1)], borderRadius: BorderRadius.circular(10)),
+                  color: Colors.white,
+                  boxShadow: const [
+                    BoxShadow(color: Colors.grey, blurRadius: 1)
+                  ],
+                  borderRadius: BorderRadius.circular(10)),
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Column(
                 children: [
@@ -814,7 +988,8 @@ class ChildresnDetails extends StatelessWidget {
                     children: [
                       Expanded(
                         child: DataText(
-                          text: d['user_name'] ?? 'N/A' + " - " + (d['relation_name'] ?? 'N/A'),
+                          text: d['user_name'] ??
+                              'N/A' + " - " + (d['relation_name'] ?? 'N/A'),
                           fontSize: 17,
                           fontWeight: FontWeight.bold,
                         ),
@@ -834,7 +1009,8 @@ class ChildresnDetails extends StatelessWidget {
                             if (d['father_children'].isEmpty) {
                               ToastUtils().showCustom('No Data Found');
                             } else {
-                              Get.bottomSheet(ChildresnDetails(myList: d['father_children']));
+                              Get.bottomSheet(ChildresnDetails(
+                                  myList: d['father_children']));
                             }
                           },
                           child: Icon(
@@ -848,7 +1024,8 @@ class ChildresnDetails extends StatelessWidget {
                     children: [
                       DataText(text: ('Mobile No :'), fontSize: 15),
                       Expanded(child: SizedBox()),
-                      DataText(text: (d['mobilenumber'].toString()), fontSize: 15),
+                      DataText(
+                          text: (d['mobilenumber'].toString()), fontSize: 15),
                     ],
                   ),
                   Row(
@@ -862,7 +1039,8 @@ class ChildresnDetails extends StatelessWidget {
                     children: [
                       DataText(text: ('Occupation :'), fontSize: 15),
                       Expanded(child: SizedBox()),
-                      DataText(text: d['occupation_name'] ?? 'N/A', fontSize: 15),
+                      DataText(
+                          text: d['occupation_name'] ?? 'N/A', fontSize: 15),
                     ],
                   ),
                 ],
@@ -875,7 +1053,13 @@ class ChildresnDetails extends StatelessWidget {
 
 class DetailPage extends StatelessWidget {
   const DetailPage(
-      {super.key, required this.address, required this.number, required this.country, required this.State, required this.city, required this.area});
+      {super.key,
+      required this.address,
+      required this.number,
+      required this.country,
+      required this.State,
+      required this.city,
+      required this.area});
 
   final String address;
   final String number;
@@ -983,12 +1167,14 @@ class DetailPage extends StatelessWidget {
                     onPressed: () {
                       Get.dialog(CustomAlert(
                           title: 'Confirm Delete',
-                          content: 'Are you sure you want to delete your account?',
+                          content:
+                              'Are you sure you want to delete your account?',
                           positiveText: 'Yes',
                           onConfirm: () async {
                             Get.back();
                             Get.dialog(myCircular(), barrierDismissible: false);
-                            await Get.find<ProfileController>().deleteAccountFunction();
+                            await Get.find<ProfileController>()
+                                .deleteAccountFunction();
                             Get.back();
                           },
                           negativeText: 'No'));
@@ -1033,14 +1219,18 @@ class ContributionPage extends StatelessWidget {
                 var d = pc.ContributionData[index];
 
                 return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                   child: Container(
                     width: mySize.width,
                     decoration: BoxDecoration(
                         color: Colors.white,
-                        boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 1)],
+                        boxShadow: const [
+                          BoxShadow(color: Colors.grey, blurRadius: 1)
+                        ],
                         borderRadius: BorderRadius.circular(10)),
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
                     child: Row(
                       children: [
                         DataText(
@@ -1053,7 +1243,8 @@ class ContributionPage extends StatelessWidget {
                         ),
                         Expanded(
                           child: DataText(
-                            text: DateFormat('dd-MMM-yyyy').format(DateTime.parse(d['transaction_date'])),
+                            text: DateFormat('dd-MMM-yyyy')
+                                .format(DateTime.parse(d['transaction_date'])),
                             fontSize: 17,
                             fontWeight: FontWeight.bold,
                           ),
@@ -1099,14 +1290,18 @@ class MonthlyPendingData extends StatelessWidget {
                 var d = pc.MonthlyPending[index];
 
                 return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                   child: Container(
                     width: mySize.width,
                     decoration: BoxDecoration(
                         color: Colors.white,
-                        boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 1)],
+                        boxShadow: const [
+                          BoxShadow(color: Colors.grey, blurRadius: 1)
+                        ],
                         borderRadius: BorderRadius.circular(10)),
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
                     child: Row(
                       children: [
                         DataText(
@@ -1119,9 +1314,11 @@ class MonthlyPendingData extends StatelessWidget {
                         ),
                         Expanded(
                           child: DataText(
-                            text: DateFormat('dd-MMM-yyyy').format(DateTime.parse(d['date'])) +
+                            text: DateFormat('dd-MMM-yyyy')
+                                    .format(DateTime.parse(d['date'])) +
                                 " - " +
-                                DateFormat('MMM/yy').format(DateTime(DateTime.now().year, d['month'])),
+                                DateFormat('MMM/yy').format(
+                                    DateTime(DateTime.now().year, d['month'])),
                             fontSize: 17,
                             fontWeight: FontWeight.bold,
                           ),
@@ -1129,7 +1326,9 @@ class MonthlyPendingData extends StatelessWidget {
                         DataText(
                           text: '₹' + d['amount'].toString(),
                           fontSize: 18,
-                          color: d['payment_status'] == 2 ? Colors.red : Colors.green,
+                          color: d['payment_status'] == 2
+                              ? Colors.red
+                              : Colors.green,
                           fontWeight: FontWeight.bold,
                         ),
                       ],
