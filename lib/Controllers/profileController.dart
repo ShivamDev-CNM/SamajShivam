@@ -44,6 +44,7 @@ class ProfileController extends GetxController {
 
   ScrollController profileScroll = ScrollController();
   ScrollController expenseScroll = ScrollController();
+
   //var isNotification = false.obs; // Badge visibility controller
 
   Future<void> fetchProfileData() async {
@@ -119,15 +120,9 @@ class ProfileController extends GetxController {
     addressController.text = profileData[0]['address'];
     myImage.value = profileData[0]['profile_pic'];
     updateProfileImage.value = null;
-    selectCountry.value = profileData[0]['country'].toString() == ""
-        ? '1'
-        : profileData[0]['country'].toString();
-    selectState.value = profileData[0]['state'].toString() == ""
-        ? '1'
-        : profileData[0]['state'].toString();
-    selectCity.value = profileData[0]['city'].toString() == ""
-        ? '1'
-        : profileData[0]['city'].toString();
+    selectCountry.value = profileData[0]['country'].toString() == "" ? '1' : profileData[0]['country'].toString();
+    selectState.value = profileData[0]['state'].toString() == "" ? '1' : profileData[0]['state'].toString();
+    selectCity.value = profileData[0]['city'].toString() == "" ? '1' : profileData[0]['city'].toString();
     selectArea.value = profileData[0]['area'].toString();
   }
 
@@ -147,8 +142,7 @@ class ProfileController extends GetxController {
       countryList.clear();
       String accesstoken = await getShared();
 
-      final response = await http.get(Uri.parse(myApi.CountryApI),
-          headers: {'x-api-key': accesstoken.toString()});
+      final response = await http.get(Uri.parse(myApi.CountryApI), headers: {'x-api-key': accesstoken.toString()});
       final jsonData = jsonDecode(response.body);
       if (response.statusCode == 200) {
         countryList.assignAll(jsonData['data']);
@@ -170,10 +164,8 @@ class ProfileController extends GetxController {
 
       stateList.clear();
 
-      final response = await http.get(
-          Uri.parse(
-              myApi.StateApI + '?country_id=${selectCountry.value.toString()}'),
-          headers: {'x-api-key': accesstoken.toString()});
+      final response =
+          await http.get(Uri.parse(myApi.StateApI + '?country_id=${selectCountry.value.toString()}'), headers: {'x-api-key': accesstoken.toString()});
       final jsonData = jsonDecode(response.body);
       if (response.statusCode == 200) {
         stateList.assignAll(jsonData['data']);
@@ -195,10 +187,8 @@ class ProfileController extends GetxController {
 
       cityList.clear();
 
-      final response = await http.get(
-          Uri.parse(
-              myApi.CityApI + '?state_id=${selectState.value.toString()}'),
-          headers: {'x-api-key': accesstoken.toString()});
+      final response =
+          await http.get(Uri.parse(myApi.CityApI + '?state_id=${selectState.value.toString()}'), headers: {'x-api-key': accesstoken.toString()});
       final jsonData = jsonDecode(response.body);
       if (response.statusCode == 200) {
         cityList.assignAll(jsonData['data']);
@@ -220,9 +210,7 @@ class ProfileController extends GetxController {
 
       areaList.clear();
 
-      final response = await http.get(
-          Uri.parse('${myApi.AreaApI}?city_id=${selectCity.value}'),
-          headers: {'x-api-key': accesstoken.toString()});
+      final response = await http.get(Uri.parse('${myApi.AreaApI}?city_id=${selectCity.value}'), headers: {'x-api-key': accesstoken.toString()});
       final jsonData = jsonDecode(response.body);
       if (response.statusCode == 200) {
         areaList.assignAll(jsonData['data']);
@@ -244,8 +232,7 @@ class ProfileController extends GetxController {
 
       relationList.clear();
 
-      final response = await http.get(Uri.parse(myApi.relationListAPI),
-          headers: {'x-api-key': accesstoken.toString()});
+      final response = await http.get(Uri.parse(myApi.relationListAPI), headers: {'x-api-key': accesstoken.toString()});
       final jsonData = jsonDecode(response.body);
       if (response.statusCode == 200) {
         relationList.assignAll(jsonData['data']);
@@ -267,8 +254,7 @@ class ProfileController extends GetxController {
 
       occupationList.clear();
 
-      final response = await http.get(Uri.parse(myApi.occupationListAPI),
-          headers: {'x-api-key': accesstoken.toString()});
+      final response = await http.get(Uri.parse(myApi.occupationListAPI), headers: {'x-api-key': accesstoken.toString()});
       final jsonData = jsonDecode(response.body);
       print(jsonData);
       if (response.statusCode == 200) {
@@ -291,8 +277,7 @@ class ProfileController extends GetxController {
 
       fatherList.clear();
 
-      final response = await http.get(Uri.parse(myApi.userLists + '?gender=1'),
-          headers: {'x-api-key': accesstoken.toString()});
+      final response = await http.get(Uri.parse(myApi.userLists + '?gender=1'), headers: {'x-api-key': accesstoken.toString()});
       final jsonData = jsonDecode(response.body);
       if (response.statusCode == 200) {
         fatherList.assignAll(jsonData['data']);
@@ -314,8 +299,7 @@ class ProfileController extends GetxController {
 
       motherList.clear();
 
-      final response = await http.get(Uri.parse(myApi.userLists + '?gender=2'),
-          headers: {'x-api-key': accesstoken.toString()});
+      final response = await http.get(Uri.parse(myApi.userLists + '?gender=2'), headers: {'x-api-key': accesstoken.toString()});
       final jsonData = jsonDecode(response.body);
       if (response.statusCode == 200) {
         motherList.assignAll(jsonData['data']);
@@ -353,10 +337,7 @@ class ProfileController extends GetxController {
 
       if (updateProfileImage.value != null) {
         request.files.add(http.MultipartFile(
-            'profile_pic',
-            http.ByteStream.fromBytes(
-                updateProfileImage.value!.readAsBytesSync()),
-            updateProfileImage.value!.lengthSync(),
+            'profile_pic', http.ByteStream.fromBytes(updateProfileImage.value!.readAsBytesSync()), updateProfileImage.value!.lengthSync(),
             filename: 'profile_pic'));
       }
 
@@ -389,8 +370,7 @@ class ProfileController extends GetxController {
   logout() async {
     String accesstoken = await getShared();
 
-    final response = await http
-        .post(Uri.parse(myApi.LogoutAPI), headers: {'x-api-key': accesstoken});
+    final response = await http.post(Uri.parse(myApi.LogoutAPI), headers: {'x-api-key': accesstoken});
 
     if (response.statusCode == 200) {
       clearShared();
@@ -452,11 +432,7 @@ class ProfileController extends GetxController {
   TextEditingController DateController = TextEditingController();
 
   pickDate() async {
-    final picker = await showDatePicker(
-        context: Get.context!,
-        firstDate: DateTime(2000),
-        initialDate: userDobDate.value,
-        lastDate: DateTime(2050));
+    final picker = await showDatePicker(context: Get.context!, firstDate: DateTime(2000), initialDate: userDobDate.value, lastDate: DateTime(2050));
     if (picker != null) {
       userDobDate.value = picker;
       DateController.text = DateFormat('dd-MMM-yyyy').format(userDobDate.value);
@@ -486,8 +462,7 @@ class ProfileController extends GetxController {
       request.fields['mobilenumber'] = userMobileNumber.text.toString();
       request.fields['email'] = userEmail.text.toString();
       request.fields['password'] = userPassword.text.toString();
-      request.fields['dob'] =
-          DateFormat('dd-MM-yyyy').format(userDobDate.value).toString();
+      request.fields['dob'] = DateFormat('dd-MM-yyyy').format(userDobDate.value).toString();
       request.fields['occupation'] = userOccupation.value.toString();
       request.fields['country'] = userCountry.value.toString();
       request.fields['state'] = userState.value.toString();
@@ -497,9 +472,7 @@ class ProfileController extends GetxController {
 
       if (signUpImage.value != null) {
         request.files.add(http.MultipartFile(
-            'profile_pic',
-            http.ByteStream.fromBytes(signUpImage.value!.readAsBytesSync()),
-            signUpImage.value!.lengthSync(),
+            'profile_pic', http.ByteStream.fromBytes(signUpImage.value!.readAsBytesSync()), signUpImage.value!.lengthSync(),
             filename: 'profile_pic'));
       }
 
@@ -535,8 +508,7 @@ class ProfileController extends GetxController {
       String accesstoken = await getShared();
 
       final response = await http.get(
-          Uri.parse(myApi.BaseUrl +
-              '/api/all_payment_list?transaction_type=${type.value}&year=${selectedDate.value.year}'),
+          Uri.parse(myApi.BaseUrl + '/api/all_payment_list?transaction_type=${type.value}&year=${selectedDate.value.year}'),
           headers: {'x-api-key': accesstoken});
       final jsonData = jsonDecode(response.body);
       if (response.statusCode == 200) {
@@ -563,9 +535,7 @@ class ProfileController extends GetxController {
       showDetail3.clear();
       String accesstoken = await getShared();
 
-      final response = await http.get(
-          Uri.parse(myApi.BaseUrl + '/api/users_lists'),
-          headers: {'x-api-key': accesstoken});
+      final response = await http.get(Uri.parse(myApi.BaseUrl + '/api/users_lists'), headers: {'x-api-key': accesstoken});
       final jsonData = jsonDecode(response.body);
       if (response.statusCode == 200) {
         userList.assignAll(jsonData['data']);
@@ -582,6 +552,28 @@ class ProfileController extends GetxController {
       userList.clear();
     } finally {
       update();
+    }
+  }
+
+  deleteAccountFunction() async {
+    try {
+      String accesstoken = await getShared();
+      print(accesstoken);
+
+      final response = await http.post(Uri.parse(myApi.DeleteAccountAPI), headers: {'x-api-key': accesstoken});
+      final jsonData = jsonDecode(response.body);
+      print(jsonData);
+      print('ahasdsad');
+      if (response.statusCode == 200) {
+        ToastUtils().showCustom(jsonData['message']);
+        await clearShared();
+        Get.offAll(() => LoginScreen());
+      } else {
+        ToastUtils().showCustom('Something went wrong');
+      }
+    } catch (e) {
+      print(e.toString());
+      ToastUtils().showCustom('Something went wrong');
     }
   }
 }

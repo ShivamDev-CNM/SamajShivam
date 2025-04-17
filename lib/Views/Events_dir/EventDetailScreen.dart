@@ -80,9 +80,7 @@ class EventDetailScreen extends StatelessWidget {
                 child: Container(
                   height: mySize.height / 1.5,
                   width: mySize.width,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colors.white),
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 7),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,20 +104,14 @@ class EventDetailScreen extends StatelessWidget {
                                   iconr: Icons.calendar_month_outlined,
                                   text: d['from_date'] == ""
                                       ? ''
-                                      : DateFormat('dd-MMM-yy').format(
-                                              DateTime.parse(d['from_date'])) +
+                                      : DateFormat('dd-MMM-yy').format(DateTime.parse(d['from_date'])) +
                                           " to " +
-                                          DateFormat('dd-MMM yy').format(
-                                              DateTime.parse(d['to_date']))),
+                                          DateFormat('dd-MMM yy').format(DateTime.parse(d['to_date']))),
                               myRow(
                                   iconr: Icons.watch_later_outlined,
-                                  text: DateFormat('h:mma').format(
-                                          DateFormat('HH:mm:ss')
-                                              .parse(d['from_time'])) +
+                                  text: DateFormat('h:mma').format(DateFormat('HH:mm:ss').parse(d['from_time'])) +
                                       ' to ' +
-                                      DateFormat('h:mma').format(
-                                          DateFormat('HH:mm:ss')
-                                              .parse(d['to_time']))),
+                                      DateFormat('h:mma').format(DateFormat('HH:mm:ss').parse(d['to_time']))),
 
                               SizedBox(
                                 height: 10,
@@ -164,20 +156,15 @@ class EventDetailScreen extends StatelessWidget {
                               Wrap(
                                 children: [
                                   Wrap(
-                                      children:
-                                          List.generate(i.length, (index) {
+                                      children: List.generate(i.length, (index) {
                                     return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 4, horizontal: 4),
+                                      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                                       child: GestureDetector(
                                         onTap: () {
-                                          Get.find<Eventcontroller>()
-                                              .imageIndex
-                                              .value = index;
+                                          Get.find<Eventcontroller>().imageIndex.value = index;
                                           showModalBottomSheet(
                                               isScrollControlled: true,
-                                              scrollControlDisabledMaxHeightRatio:
-                                                  200,
+                                              scrollControlDisabledMaxHeightRatio: 200,
                                               context: context,
                                               builder: (context) {
                                                 return ImageWatch(
@@ -186,8 +173,7 @@ class EventDetailScreen extends StatelessWidget {
                                               });
                                         },
                                         child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                          borderRadius: BorderRadius.circular(10),
                                           child: CachedNetworkImage(
                                             imageUrl: i[index]['image'],
                                             height: 80,
@@ -199,48 +185,38 @@ class EventDetailScreen extends StatelessWidget {
                                     );
                                   })),
                                   Wrap(
-                                      children:
-                                          List.generate(v.length, (index) {
+                                      children: List.generate(v.length, (index) {
                                     return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 4, horizontal: 4),
+                                      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                                       child: GestureDetector(
                                         onTap: () async {
                                           Get.dialog(myCircular());
                                           try {
                                             ec.ViInd.value = index;
                                             ec.videoIndex.value = index + 1;
-                                            await ec
-                                                .loadVideo(v[index]['video']);
+                                            await ec.loadVideo(v[index]['video']);
                                           } catch (e) {
                                           } finally {
                                             Get.back();
                                           }
 
-                                          if (ec.isVideoInitialized.value ==
-                                              true) {
+                                          if (ec.isVideoInitialized.value == true) {
                                             Get.bottomSheet(myVideoPlayerWidget(
                                               vides: v,
-                                              thumbNail: ec.thumbnailList,
                                             ));
                                           } else {
-                                            ToastUtils().showCustom(
-                                                'Failed to load video');
+                                            ToastUtils().showCustom('Failed to load video');
                                           }
                                         },
                                         child: Container(
                                           height: 80,
                                           width: 80,
                                           decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: FileImage(File(
-                                                      ec.thumbnailList[index])),
-                                                  fit: BoxFit.cover),
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
+                                              image: DecorationImage(image: AssetImage('assets/images/videoimage.jpg'), fit: BoxFit.cover),
+                                              borderRadius: BorderRadius.circular(10)),
                                           child: Icon(
                                             Icons.play_circle,
-                                            color: Colors.white,
+                                            color: Colors.green,
                                           ),
                                         ),
                                       ),
@@ -267,16 +243,13 @@ class EventDetailScreen extends StatelessWidget {
                                         Tab(
                                           child: Text(
                                             'Donations',
-                                            style: TextStyle(
-                                                color: Green, fontSize: 20),
+                                            style: TextStyle(color: Green, fontSize: 20),
                                           ),
                                         ),
                                         Tab(
                                           child: Text(
                                             'Expenses',
-                                            style: TextStyle(
-                                                color: Colors.red,
-                                                fontSize: 20),
+                                            style: TextStyle(color: Colors.red, fontSize: 20),
                                           ),
                                         ),
                                       ],
@@ -287,9 +260,10 @@ class EventDetailScreen extends StatelessWidget {
                                     Container(
                                       height: mySize.height / 3,
                                       child: TabBarView(
+                                        physics: NeverScrollableScrollPhysics(),
                                         children: [
                                           // Replace with your actual content widgets
-                                          DonationList(
+                                          ExpenseList(
                                             myList: ec.eventDonationList,
                                             title: '  Donation',
                                             col: Green,
@@ -405,8 +379,7 @@ class ImageWatch extends StatelessWidget {
                   child: Row(
                     children: List.generate(Images.length, (index) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 5, vertical: 5),
+                        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                         child: GestureDetector(
                           onTap: () {
                             ee.imageIndex.value = index;
@@ -414,9 +387,7 @@ class ImageWatch extends StatelessWidget {
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                border: index == ee.imageIndex.value
-                                    ? Border.all(color: Green, width: 2)
-                                    : null),
+                                border: index == ee.imageIndex.value ? Border.all(color: Green, width: 2) : null),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: CachedNetworkImage(
@@ -442,11 +413,7 @@ class ImageWatch extends StatelessWidget {
 }
 
 class DonationList extends StatelessWidget {
-  DonationList(
-      {super.key,
-      required this.myList,
-      required this.title,
-      required this.col});
+  DonationList({super.key, required this.myList, required this.title, required this.col});
 
   Eventcontroller ec = Get.find<Eventcontroller>();
   final List myList;
@@ -464,105 +431,86 @@ class DonationList extends StatelessWidget {
             ? Center(
                 child: Text('No Data Found'),
               )
-            :  DataTable2(
-          headingRowDecoration:
-          BoxDecoration(color:Green),
-          columnSpacing: 12,
-          horizontalMargin: 12,
-          minWidth: 550,
-          // Minimum table width
-          fixedLeftColumns: 1,
-          // This makes the first column fixed (Name column)
-          columns: [
-            DataColumn2(
-              label: Text(
-                "User",
-                style: GoogleFonts.dmSans(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white),
-              ),
-              size: ColumnSize.L, // Larger column size
-            ),
-            DataColumn(
-              label: Text(
-                "Amount",
-                maxLines: 2,
-                softWrap: true,
-                style: GoogleFonts.dmSans(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white),
-              ),
-            ),
-            DataColumn(
-              label: Text(
-                "Date",
-                style: GoogleFonts.dmSans(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white),
-              ),
-            ),
-            DataColumn(
-              label: Text(
-                "Title",
-                style: GoogleFonts.dmSans(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white),
-              ),
-            ),
-
-          ],
-          rows: List<DataRow>.generate( myList.length, (index) {
-            var d = myList[index];
-            return DataRow(
-              cells: [
-                DataCell(
-                  DataText(
-                    wantels: true,
-                    text:  d['user_name'],
-                    fontSize: 13,
-                    color: Colors.black,
+            : DataTable2(
+                headingRowDecoration: BoxDecoration(color: Green),
+                columnSpacing: 12,
+                horizontalMargin: 12,
+                minWidth: 550,
+                // Minimum table width
+                fixedLeftColumns: 1,
+                // This makes the first column fixed (Name column)
+                columns: [
+                  DataColumn2(
+                    label: Text(
+                      "User",
+                      style: GoogleFonts.dmSans(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.white),
+                    ),
+                    size: ColumnSize.L, // Larger column size
                   ),
-                ),
-                DataCell(
-                  DataText(
-                    maxLines: 2,
-                    wantels: true,
-                    text: d['amount'].toString(),
-                    fontSize: 13,
-                    color: Colors.black,
+                  DataColumn(
+                    label: Text(
+                      "Amount",
+                      maxLines: 2,
+                      softWrap: true,
+                      style: GoogleFonts.dmSans(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.white),
+                    ),
                   ),
-                ),
-                DataCell(
-                  DataText(
-                    // wantels: true,
-                    maxLines: 2,
-                    wantels: true,
-                    text: DateFormat('dd-MMM-yy').format(
-                        DateTime.parse(
-                            d['transaction_date'])),
-                    fontSize: 13,
-                    color: Colors.black,
+                  DataColumn(
+                    label: Text(
+                      "Date",
+                      style: GoogleFonts.dmSans(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.white),
+                    ),
                   ),
-                ),
-                DataCell(
-                  DataText(
-                    wantels: true,
-                    text: d['title'],
-                    fontSize: 13,
-                    color: Colors.black,
+                  DataColumn(
+                    label: Text(
+                      "Title",
+                      style: GoogleFonts.dmSans(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.white),
+                    ),
                   ),
-                ),
-
-              ],
-            );
-          }),
-        ),
-
-
+                ],
+                rows: List<DataRow>.generate(myList.length, (index) {
+                  var d = myList[index];
+                  return DataRow(
+                    cells: [
+                      DataCell(
+                        DataText(
+                          wantels: true,
+                          text: d['user_name'],
+                          fontSize: 13,
+                          color: Colors.black,
+                        ),
+                      ),
+                      DataCell(
+                        DataText(
+                          maxLines: 2,
+                          wantels: true,
+                          text: d['amount'].toString(),
+                          fontSize: 13,
+                          color: Colors.black,
+                        ),
+                      ),
+                      DataCell(
+                        DataText(
+                          // wantels: true,
+                          maxLines: 2,
+                          wantels: true,
+                          text: DateFormat('dd-MMM-yy').format(DateTime.parse(d['transaction_date'])),
+                          fontSize: 13,
+                          color: Colors.black,
+                        ),
+                      ),
+                      DataCell(
+                        DataText(
+                          wantels: true,
+                          text: d['title'],
+                          fontSize: 13,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  );
+                }),
+              ),
         // Column(
         //         crossAxisAlignment: CrossAxisAlignment.start,
         //         children: [
@@ -674,11 +622,7 @@ class DonationList extends StatelessWidget {
 }
 
 class ExpenseList extends StatelessWidget {
-  ExpenseList(
-      {super.key,
-      required this.myList,
-      required this.title,
-      required this.col});
+  ExpenseList({super.key, required this.myList, required this.title, required this.col});
 
   Eventcontroller ec = Get.find<Eventcontroller>();
   final List myList;
@@ -700,19 +644,20 @@ class ExpenseList extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    decoration: BoxDecoration(
-                        color: col, borderRadius: BorderRadius.circular(10)),
-                    padding: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(color: col, borderRadius: BorderRadius.circular(10)),
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                          width: mySize.width / 4,
-                          child: DataText(
-                            text: '  Title',
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
+                        Expanded(
+                          child: Container(
+                            width: mySize.width / 4,
+                            child: DataText(
+                              text: 'Title',
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                         Container(
@@ -735,7 +680,7 @@ class ExpenseList extends StatelessWidget {
                         ),
                         Container(
                           child: DataText(
-                            text: 'Desc',
+                            text: 'Info',
                             fontSize: 18,
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
@@ -752,15 +697,14 @@ class ExpenseList extends StatelessWidget {
                           return Column(
                             children: [
                               Container(
-                                padding: EdgeInsets.only(top: 5),
+                                padding: EdgeInsets.symmetric(horizontal: 5),
                                 child: Row(
                                   children: [
-                                    Container(
-                                      width: mySize.width / 4,
+                                    Expanded(
                                       child: DataText(
                                         text: d['title'],
                                         wantels: true,
-                                        fontSize: 12,
+                                        fontSize: 13,
                                       ),
                                     ),
                                     Container(
@@ -768,27 +712,32 @@ class ExpenseList extends StatelessWidget {
                                       width: mySize.width / 4.5,
                                       child: DataText(
                                         text: d['amount'].toString(),
-                                        fontSize: 12,
+                                        fontSize: 13,
                                         wantels: true,
                                       ),
                                     ),
                                     Container(
                                       width: mySize.width / 4.5,
                                       child: DataText(
-                                          text: DateFormat('dd-MMM-yy').format(
-                                              DateTime.parse(
-                                                  d['transaction_date'])),
-                                          fontSize: 12,
-                                          wantels: true),
+                                          text: DateFormat('dd-MMM-yy').format(DateTime.parse(d['transaction_date'])), fontSize: 12, wantels: true),
                                     ),
-                                    Expanded(
-                                      child: Container(
-                                        child: DataText(
-                                            text: d['description'],
-                                            fontSize: 12,
-                                            wantels: true),
-                                      ),
-                                    )
+
+                                    InkWell(
+                                        onTap: () {
+                                          Get.bottomSheet(myBottomSheetContainer(text: d['title'], desc: d['description'], isGreen: col));
+                                        },
+                                        child: Icon(
+                                          Icons.info_outline,
+                                        )),
+
+                                    // Expanded(
+                                    //   child: Container(
+                                    //     child: DataText(
+                                    //         text: d['description'],
+                                    //         fontSize: 12,
+                                    //         wantels: true),
+                                    //   ),
+                                    // )
                                   ],
                                 ),
                               ),
@@ -799,6 +748,64 @@ class ExpenseList extends StatelessWidget {
                   )
                 ],
               ),
+      ),
+    );
+  }
+}
+
+class myBottomSheetContainer extends StatelessWidget {
+  const myBottomSheetContainer({super.key, required this.text, required this.desc, required this.isGreen});
+
+  final String text;
+  final String desc;
+  final Color isGreen;
+
+  @override
+  Widget build(BuildContext context) {
+    var mySize = MediaQuery.sizeOf(context);
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      width: mySize.width,
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                    child: DataText(
+                  text: text,
+                  fontSize: 22,
+                  color: isGreen,
+                  fontWeight: FontWeight.w500,
+                )),
+                InkWell(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Icon(
+                      Icons.close,
+                      color: Colors.red,
+                    ))
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            DataText(
+              text: 'Desc:',
+              fontSize: 19,
+              color: isGreen,
+              fontWeight: FontWeight.w500,
+            ),
+            DataText(
+              text: desc,
+              fontSize: 18,
+            ),
+          ],
+        ),
       ),
     );
   }

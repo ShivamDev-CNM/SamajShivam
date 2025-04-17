@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:samajapp/APIS/APIS.dart';
 import 'package:samajapp/Utils/SharedPrefunc.dart';
-import 'package:samajapp/Utils/Toast.dart';
 
 class FundsController extends GetxController {
   @override
@@ -125,6 +124,7 @@ class FundsController extends GetxController {
           headers: {'x-api-key': accessToken});
       if (response.statusCode == 200) {
         final jsonData = jsonDecode(response.body);
+
 
         DonationList.assignAll(jsonData['data']);
         for (int i = 0; i < DonationList.length; i++) {

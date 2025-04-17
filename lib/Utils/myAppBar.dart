@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
@@ -15,9 +14,9 @@ import '../Views/Notification_Page/notification_controller.dart';
 import 'colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+
   ProfileController pc = Get.find<ProfileController>();
   Homecontroller homecontroller = Get.find<Homecontroller>();
-
   final NotificationController controller = Get.find<NotificationController>();
 
   CustomAppBar(
@@ -27,7 +26,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.wantTextWhite = true,
       this.onPressed,
       this.widget,
-      this.wantbell = true});
+      this.wantbell = true}
+      );
 
   final String title;
   final bool wantBackButton;

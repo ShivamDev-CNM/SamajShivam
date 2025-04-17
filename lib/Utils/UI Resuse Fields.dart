@@ -67,36 +67,50 @@ class myEventDate extends StatelessWidget {
         SizedBox(
           width: mySize.width / 22,
         ),
-        Icon(
-          Icons.festival,
-          size: 12,
-          color: Colors.grey,
-        ),
-        SizedBox(
-          width: 3,
-        ),
-        DataText(
-          text: mobile.toString(),
-          fontSize: 12,
-          color: Colors.grey,
-          fontWeight: FontWeight.w600,
+        Expanded(
+          child: Row(
+            children: [
+              Icon(
+                Icons.festival,
+                size: 12,
+                color: Colors.grey,
+              ),
+              SizedBox(
+                width: 3,
+              ),
+              Expanded(
+                child: DataText(
+                  text: mobile.toString(),
+                  fontSize: 12,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
         ),
         SizedBox(
           width: 10,
         ),
-        Icon(
-          Icons.date_range,
-          size: 12,
-          color: Colors.grey,
-        ),
-        SizedBox(
-          width: 3,
-        ),
-        DataText(
-          text: DateFormat('dd/MMM/yyyy').format(DateTime.parse(date)),
-          fontSize: 12,
-          color: Colors.grey,
-          fontWeight: FontWeight.w600,
+        Expanded(
+          child: Row(
+            children: [
+              Icon(
+                Icons.date_range,
+                size: 12,
+                color: Colors.grey,
+              ),
+              SizedBox(
+                width: 3,
+              ),
+              DataText(
+                text: DateFormat('dd/MMM/yyyy').format(DateTime.parse(date)),
+                fontSize: 12,
+                color: Colors.grey,
+                fontWeight: FontWeight.w600,
+              )
+            ],
+          ),
         )
       ],
     );
@@ -184,9 +198,7 @@ class myDate extends StatelessWidget {
           width: 3,
         ),
         DataText(
-          text: date == ""
-              ? '--'
-              : DateFormat('dd/MMM/yyyy').format(DateTime.parse(date)),
+          text: date == "" ? '--' : DateFormat('dd/MMM/yyyy').format(DateTime.parse(date)),
           fontSize: 12,
           color: Colors.grey,
           fontWeight: FontWeight.w600,
@@ -196,11 +208,6 @@ class myDate extends StatelessWidget {
   }
 }
 
-
-
-
-
-
 class FundsRow extends StatelessWidget {
   const FundsRow({super.key, required this.title, required this.data});
 
@@ -209,10 +216,11 @@ class FundsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DataText(
-          text: title+' : ',
+          text: title + ' : ',
           fontSize: 18,
           color: Green,
           fontWeight: FontWeight.w500,
@@ -224,7 +232,6 @@ class FundsRow extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-
       ],
     );
   }
@@ -253,9 +260,7 @@ class myDatenPerson extends StatelessWidget {
           width: 3,
         ),
         DataText(
-          text: date == ""
-              ? '--'
-              : DateFormat('dd/MMM/yyyy').format(DateTime.parse(date)),
+          text: date == "" ? '--' : DateFormat('dd/MMM/yyyy').format(DateTime.parse(date)),
           fontSize: 12,
           color: Colors.grey,
           fontWeight: FontWeight.w600,
@@ -281,9 +286,6 @@ class myDatenPerson extends StatelessWidget {
     );
   }
 }
-
-
-
 
 class myTypetDate extends StatelessWidget {
   const myTypetDate({super.key, required this.mobile, required this.date});

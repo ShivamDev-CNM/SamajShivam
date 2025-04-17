@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +12,10 @@ import 'package:samajapp/Controllers/profileController.dart';
 import 'package:samajapp/Fireabse/Notification.dart';
 import 'package:samajapp/Utils/colors.dart';
 import 'package:samajapp/Views/SplashScreen/SplashScreen.dart';
-import 'package:samajapp/firebase_options.dart';
-
 import 'Views/Notification_Page/notification_controller.dart';
 
 @pragma('vm:entry-point')
+
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 }
@@ -65,7 +62,7 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       initialBinding: initialBinding(),
       debugShowCheckedModeBanner: false,
-      title: 'Samaj',
+      title: 'Solanki Pariwar',
       theme: ThemeData(
         scaffoldBackgroundColor: backgroundColor,
         appBarTheme: const AppBarTheme(

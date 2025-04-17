@@ -239,7 +239,7 @@ class EventsScreen extends StatelessWidget {
                               await ec.fetchEventDetail(d['id'].toString());
                               await ec.fetchEventExpenseList(d['id']);
                               await ec.fetchEventDonationList(d['id']);
-                              await ec.LoopIt();
+                              // await ec.LoopIt();
                             } finally {
                               Get.back();
                             }

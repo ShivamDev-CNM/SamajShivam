@@ -7,23 +7,19 @@ import 'package:samajapp/Utils/mytxt.dart';
 import 'package:video_player/video_player.dart';
 
 class myVideoPlayerWidget extends StatefulWidget {
-
-
-  myVideoPlayerWidget(
-      {super.key, required this.vides, required this.thumbNail});
+  myVideoPlayerWidget({
+    super.key,
+    required this.vides,
+  });
 
   final List vides;
-  final List thumbNail;
 
   @override
   State<myVideoPlayerWidget> createState() => _myVideoPlayerWidgetState();
 }
 
-class _myVideoPlayerWidgetState extends State<myVideoPlayerWidget>
-    with TickerProviderStateMixin {
-
+class _myVideoPlayerWidgetState extends State<myVideoPlayerWidget> with TickerProviderStateMixin {
   Eventcontroller ec = Get.find<Eventcontroller>();
-
 
   @override
   void initState() {
@@ -66,12 +62,8 @@ class _myVideoPlayerWidgetState extends State<myVideoPlayerWidget>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    DataText(
-                        text: '${ec.formatDuration(ec.videoDuration.value)}',
-                        fontSize: 15),
-                    DataText(
-                        text: ec.formatDuration(ec.TotalvideoDuration.value),
-                        fontSize: 14)
+                    DataText(text: '${ec.formatDuration(ec.videoDuration.value)}', fontSize: 15),
+                    DataText(text: ec.formatDuration(ec.TotalvideoDuration.value), fontSize: 14)
                   ],
                 ),
               ),
@@ -90,9 +82,7 @@ class _myVideoPlayerWidgetState extends State<myVideoPlayerWidget>
                     ec.playPauseVideo();
                   },
                   child: Icon(
-                    ec.videoPlaying.value
-                        ? Icons.pause_circle
-                        : Icons.play_circle,
+                    ec.videoPlaying.value ? Icons.pause_circle : Icons.play_circle,
                     color: Colors.blue,
                     size: 45,
                   ),
@@ -123,17 +113,12 @@ class _myVideoPlayerWidgetState extends State<myVideoPlayerWidget>
                           height: 80,
                           width: 80,
                           decoration: BoxDecoration(
-                              border: ec.ViInd.value == index
-                                  ? Border.all(color: Green, width: 2)
-                                  : null,
-                              image: DecorationImage(
-                                  image:
-                                      FileImage(File(widget.thumbNail[index])),
-                                  fit: BoxFit.cover),
+                              border: ec.ViInd.value == index ? Border.all(color: Green, width: 2) : null,
+                              image: DecorationImage(image: AssetImage('assets/images/videoimage.jpg'), fit: BoxFit.cover),
                               borderRadius: BorderRadius.circular(10)),
                           child: Icon(
                             Icons.play_circle,
-                            color: Colors.white,
+                            color: Colors.green,
                           ),
                         ),
                       ),

@@ -49,9 +49,7 @@ class _FundsScreenState extends State<FundsScreen> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 width: mySize.width,
-                decoration: BoxDecoration(
-                    color: AppBarColor,
-                    borderRadius: BorderRadius.circular(10)),
+                decoration: BoxDecoration(color: AppBarColor, borderRadius: BorderRadius.circular(10)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,10 +88,7 @@ class _FundsScreenState extends State<FundsScreen> {
                         return SizedBox();
                       } else {
                         return DataText(
-                          text: "₹" +
-                              " " +
-                              NumberFormat('##,##,##,##,###.00')
-                                  .format(fc.TotalComData[0]['remaining']),
+                          text: "₹" + " " + NumberFormat('##,##,##,##,###.00').format(fc.TotalComData[0]['remaining']),
                           fontSize: 25,
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -188,10 +183,7 @@ Widget myContainer(String text, int Index, int scrollIndex) {
           child: Text(
         text,
         textAlign: TextAlign.center,
-        style: GoogleFonts.dmSans(
-            color: fc.currentIndex.value == Index ? Colors.white : Green,
-            fontWeight: FontWeight.bold,
-            fontSize: 16),
+        style: GoogleFonts.dmSans(color: fc.currentIndex.value == Index ? Colors.white : Green, fontWeight: FontWeight.bold, fontSize: 16),
       )),
     ),
   );
@@ -229,14 +221,9 @@ class CommunityFundsScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 5),
+                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 5),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                    boxShadow: const [
-                      BoxShadow(color: Colors.grey, blurRadius: 1)
-                    ]),
+                    borderRadius: BorderRadius.circular(10), color: Colors.white, boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 1)]),
                 child: Column(
                   children: [
                     Row(
@@ -252,10 +239,7 @@ class CommunityFundsScreen extends StatelessWidget {
                             return Text('--');
                           } else {
                             return DataText(
-                              text: "₹" +
-                                  " " +
-                                  NumberFormat('##,##,##,##,###').format(
-                                      fc.MonthlyCommunityList[0]['donation']),
+                              text: "₹" + " " + NumberFormat('##,##,##,##,###').format(fc.MonthlyCommunityList[0]['donation']),
                               fontSize: 18,
                               color: Green,
                               fontWeight: FontWeight.bold,
@@ -277,10 +261,7 @@ class CommunityFundsScreen extends StatelessWidget {
                             return Text('--');
                           } else {
                             return DataText(
-                              text: "₹" +
-                                  " " +
-                                  NumberFormat('##,##,##,##,###').format(
-                                      fc.MonthlyCommunityList[0]['advertise']),
+                              text: "₹" + " " + NumberFormat('##,##,##,##,###').format(fc.MonthlyCommunityList[0]['advertise']),
                               fontSize: 18,
                               color: Green,
                               fontWeight: FontWeight.bold,
@@ -302,10 +283,7 @@ class CommunityFundsScreen extends StatelessWidget {
                             return Text('--');
                           } else {
                             return DataText(
-                              text: "₹" +
-                                  " " +
-                                  NumberFormat('##,##,##,##,###').format(fc
-                                      .MonthlyCommunityList[0]['sponsorship']),
+                              text: "₹" + " " + NumberFormat('##,##,##,##,###').format(fc.MonthlyCommunityList[0]['sponsorship']),
                               // text:
                               //     '+ ₹${fc.MonthlyCommunityList[0]['sponsorship'].toString()}',
                               fontSize: 18,
@@ -329,10 +307,7 @@ class CommunityFundsScreen extends StatelessWidget {
                             return Text('--');
                           } else {
                             return DataText(
-                              text: "₹" +
-                                  " " +
-                                  NumberFormat('##,##,##,##,###.00').format(
-                                      fc.MonthlyCommunityList[0]['monthly']),
+                              text: "₹" + " " + NumberFormat('##,##,##,##,###.00').format(fc.MonthlyCommunityList[0]['monthly']),
                               // text:
                               //     '+ ₹${fc.MonthlyCommunityList[0]['monthly'].toString()}',
                               fontSize: 18,
@@ -356,10 +331,7 @@ class CommunityFundsScreen extends StatelessWidget {
                             return Text('--');
                           } else {
                             return DataText(
-                              text: "₹" +
-                                  " " +
-                                  NumberFormat('##,##,##,##,###.00').format(
-                                      fc.MonthlyCommunityList[0]['expense']),
+                              text: "₹" + " " + NumberFormat('##,##,##,##,###.00').format(fc.MonthlyCommunityList[0]['expense']),
                               // text:
                               //     '- ₹${fc.MonthlyCommunityList[0]['expense'].toString()}',
                               fontSize: 18,
@@ -384,17 +356,11 @@ class CommunityFundsScreen extends StatelessWidget {
                             return Text('--');
                           } else {
                             return DataText(
-                              text: "₹" +
-                                  " " +
-                                  NumberFormat('##,##,##,##,###.00').format(
-                                      fc.MonthlyCommunityList[0]['remaining']),
+                              text: "₹" + " " + NumberFormat('##,##,##,##,###.00').format(fc.MonthlyCommunityList[0]['remaining']),
                               // text:
                               //     '₹${fc.MonthlyCommunityList[0]['remaining'].toString()}',
                               fontSize: 18,
-                              color:
-                                  fc.MonthlyCommunityList[0]['remaining'] <= 0
-                                      ? Colors.red
-                                      : Colors.green,
+                              color: fc.MonthlyCommunityList[0]['remaining'] <= 0 ? Colors.red : Colors.green,
                               fontWeight: FontWeight.bold,
                             );
                           }
@@ -478,9 +444,7 @@ class Donations extends StatelessWidget {
             ),
             Obx(() {
               return CustomMonthPicker(
-                myFunc: fc.NormalDonationCondition.value == '1'
-                    ? fc.fetchDonationList
-                    : fc.fetchNormalDonationList,
+                myFunc: fc.NormalDonationCondition.value == '1' ? fc.fetchDonationList : fc.fetchNormalDonationList,
                 // Pass the function reference
                 selectedDate: fc.selectDonation,
               );
@@ -503,8 +467,7 @@ class Donations extends StatelessWidget {
                     var d = fc.DonationList[index];
 
                     return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 5),
+                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                       child: GestureDetector(
                         onTap: fc.myDonationBools[index] == true
                             ? () {
@@ -512,33 +475,25 @@ class Donations extends StatelessWidget {
                                 fc.update();
                               }
                             : () async {
-                                for (int i = 0;
-                                    i < fc.myDonationBools.length;
-                                    i++) {
+                                for (int i = 0; i < fc.myDonationBools.length; i++) {
                                   fc.myDonationBools[i] = false;
                                 }
                                 fc.update();
 
                                 fc.DonationuserNames.value = "";
-                                List<String> userName =
-                                    d['multiple_user_name'].split(',');
-                                fc.DonationuserNames.value =
-                                    userName.join(', ');
+                                List<String> userName = d['multiple_user_name'].split(',');
+                                fc.DonationuserNames.value = userName.join(', ');
 
-                                fc.myDonationBools[index] =
-                                    !fc.myDonationBools[index];
+                                fc.myDonationBools[index] = !fc.myDonationBools[index];
                                 fc.update();
                               },
                         child: Container(
                           width: mySize.width,
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              boxShadow: const [
-                                BoxShadow(color: Colors.grey, blurRadius: 1)
-                              ],
+                              boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 1)],
                               borderRadius: BorderRadius.circular(10)),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -559,16 +514,13 @@ class Donations extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  d['event_contribution'] == 1
+                                  d['event_contribution'].toString() == 1
                                       ? Icon(
                                           Icons.card_giftcard,
                                           color: Green,
                                         )
                                       : DataText(
-                                          text: "+" " ₹" +
-                                              " " +
-                                              NumberFormat('##,##,##,##,###')
-                                                  .format(d['amount']),
+                                          text: "+" " ₹" + " " + NumberFormat('##,##,##,##,###').format(d['amount']),
                                           //text: '+ ₹' + d['amount'].toString(),
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -588,25 +540,20 @@ class Donations extends StatelessWidget {
                                         Get.dialog(myCircular());
 
                                         try {
-                                          await ec.fetchEventDetail(
-                                              d['event_id'].toString());
-                                          await ec.fetchEventExpenseList(
-                                              d['event_id']);
-                                          await ec.fetchEventDonationList(
-                                              d['event_id']);
-                                          await ec.LoopIt();
+                                          await ec.fetchEventDetail(d['event_id'].toString());
+                                          await ec.fetchEventExpenseList(d['event_id']);
+                                          await ec.fetchEventDonationList(d['event_id']);
+                                          // await ec.LoopIt();
                                         } finally {
                                           Get.back();
                                         }
-                                        if (ec.eventDetailData['data'] !=
-                                            null) {
+                                        if (ec.eventDetailData['data'] != null) {
                                           Get.to(() => EventDetailScreen(
                                                 id: d['id'].toString(),
                                                 indxx: 0,
                                               ));
                                         } else {
-                                          ToastUtils().showCustom(
-                                              'Unable to load data');
+                                          ToastUtils().showCustom('Unable to load data');
                                         }
                                       },
                                       child: Icon(
@@ -615,9 +562,7 @@ class Donations extends StatelessWidget {
                                       )),
                                 ],
                               ),
-                              myEventDate(
-                                  mobile: d['event_name'],
-                                  date: d['transaction_date']),
+                              myEventDate(mobile: d['event_name'], date: d['transaction_date']),
                               fc.myDonationBools[index] == true
                                   ? DataText(
                                       text: '      All Users:',
@@ -628,12 +573,10 @@ class Donations extends StatelessWidget {
                                   : SizedBox(),
                               fc.myDonationBools[index] == true
                                   ? Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20),
+                                      padding: const EdgeInsets.symmetric(horizontal: 20),
                                       child: Wrap(children: [
                                         DataText(
-                                          text: fc.DonationuserNames.value
-                                              .toString(),
+                                          text: fc.DonationuserNames.value.toString(),
                                           fontSize: 13,
                                           fontWeight: FontWeight.w500,
                                           color: Colors.grey,
@@ -660,18 +603,14 @@ class Donations extends StatelessWidget {
                     var d = fc.NormalDonationList[index];
 
                     return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 5),
+                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                       child: Container(
                         width: mySize.width,
                         decoration: BoxDecoration(
                             color: Colors.white,
-                            boxShadow: const [
-                              BoxShadow(color: Colors.grey, blurRadius: 1)
-                            ],
+                            boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 1)],
                             borderRadius: BorderRadius.circular(10)),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         child: Column(
                           children: [
                             Row(
@@ -699,12 +638,9 @@ class Donations extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   color: Green,
                                 ),
-
                               ],
                             ),
-                            myPhoneDate(
-                                mobile: d['area_name'],
-                                date: d['transaction_date'])
+                            myPhoneDate(mobile: d['area_name'], date: d['transaction_date'])
                           ],
                         ),
                       ),
@@ -756,18 +692,14 @@ class MonthlyContribution extends StatelessWidget {
                   var d = fc.MonthlyContributionList[index];
 
                   return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                     child: Container(
                       width: mySize.width,
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          boxShadow: const [
-                            BoxShadow(color: Colors.grey, blurRadius: 1)
-                          ],
+                          boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 1)],
                           borderRadius: BorderRadius.circular(10)),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       child: Column(
                         children: [
                           Row(
@@ -788,10 +720,7 @@ class MonthlyContribution extends StatelessWidget {
                                 ),
                               ),
                               DataText(
-                                text: "+" " ₹" +
-                                    " " +
-                                    NumberFormat('##,##,##,##,###')
-                                        .format(d['amount']),
+                                text: "+" " ₹" + " " + NumberFormat('##,##,##,##,###').format(d['amount']),
                                 //text: '+ ₹' +.toString(),
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -799,9 +728,7 @@ class MonthlyContribution extends StatelessWidget {
                               ),
                             ],
                           ),
-                          myPhoneDate(
-                              mobile: d['area_name'],
-                              date: d['transaction_date'])
+                          myPhoneDate(mobile: d['area_name'], date: d['transaction_date'])
                         ],
                       ),
                     ),
@@ -881,9 +808,7 @@ class ExpensesScreen extends StatelessWidget {
               width: 5,
             ),
             CustomMonthPicker(
-              myFunc: fc.ConditionExpense.value == '2'
-                  ? fc.fetchNormalExpenseList
-                  : fc.fetchExpensesList,
+              myFunc: fc.ConditionExpense.value == '2' ? fc.fetchNormalExpenseList : fc.fetchExpensesList,
               // Pass the function reference
               selectedDate: fc.selectExpensesMonth,
             )
@@ -907,8 +832,7 @@ class ExpensesScreen extends StatelessWidget {
                     return fc.ExpensesMonthList[index]['amount'] == ""
                         ? SizedBox()
                         : Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 5),
+                            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                             child: GestureDetector(
                               onTap: () async {
                                 Get.dialog(myCircular());
@@ -917,7 +841,7 @@ class ExpensesScreen extends StatelessWidget {
                                   await ec.fetchEventDetail(d['id'].toString());
                                   await ec.fetchEventExpenseList(d['id']);
                                   await ec.fetchEventDonationList(d['id']);
-                                  await ec.LoopIt();
+                                  // await ec.LoopIt();
                                 } finally {
                                   Get.back();
                                 }
@@ -927,21 +851,16 @@ class ExpensesScreen extends StatelessWidget {
                                         indxx: 1,
                                       ));
                                 } else {
-                                  ToastUtils()
-                                      .showCustom('Unable to load data');
+                                  ToastUtils().showCustom('Unable to load data');
                                 }
                               },
                               child: Container(
                                 width: mySize.width,
                                 decoration: BoxDecoration(
                                     color: Colors.white,
-                                    boxShadow: const [
-                                      BoxShadow(
-                                          color: Colors.grey, blurRadius: 1)
-                                    ],
+                                    boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 1)],
                                     borderRadius: BorderRadius.circular(10)),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                 child: Column(
                                   children: [
                                     Row(
@@ -971,7 +890,6 @@ class ExpensesScreen extends StatelessWidget {
                                           fontWeight: FontWeight.bold,
                                           color: Colors.red,
                                         ),
-
                                       ],
                                     ),
                                     fromDateToDate(
@@ -997,18 +915,14 @@ class ExpensesScreen extends StatelessWidget {
                     var d = fc.NormalExpenseList[index];
 
                     return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 5),
+                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                       child: Container(
                         width: mySize.width,
                         decoration: BoxDecoration(
                             color: Colors.white,
-                            boxShadow: const [
-                              BoxShadow(color: Colors.grey, blurRadius: 1)
-                            ],
+                            boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 1)],
                             borderRadius: BorderRadius.circular(10)),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         child: Column(
                           children: [
                             Row(
@@ -1029,10 +943,7 @@ class ExpensesScreen extends StatelessWidget {
                                   ),
                                 ),
                                 DataText(
-                                  text: "-" " ₹" +
-                                      " " +
-                                      NumberFormat('##,##,##,##,###')
-                                          .format(d['amount']),
+                                  text: "-" " ₹" + " " + NumberFormat('##,##,##,##,###').format(d['amount']),
                                   //text: '- ₹' + d['amount'].toString(),
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -1069,9 +980,7 @@ class SponsorShipList extends StatelessWidget {
         body: Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        CustomMonthPicker(
-            myFunc: fc.fetchSponSorshipList,
-            selectedDate: fc.selectSponsership),
+        CustomMonthPicker(myFunc: fc.fetchSponSorshipList, selectedDate: fc.selectSponsership),
         Expanded(
           child: GetBuilder<FundsController>(builder: (fc) {
             if (fc.SponsorShipList.isEmpty) {
@@ -1085,18 +994,14 @@ class SponsorShipList extends StatelessWidget {
                     var d = fc.SponsorShipList[index];
 
                     return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 5),
+                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                       child: Container(
                         width: mySize.width,
                         decoration: BoxDecoration(
                             color: Colors.white,
-                            boxShadow: const [
-                              BoxShadow(color: Colors.grey, blurRadius: 1)
-                            ],
+                            boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 1)],
                             borderRadius: BorderRadius.circular(10)),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -1119,10 +1024,7 @@ class SponsorShipList extends StatelessWidget {
                                   ),
                                 ),
                                 DataText(
-                                  text: "+" " ₹" +
-                                      " " +
-                                      NumberFormat('##,##,##,##,###')
-                                          .format(d['amount']),
+                                  text: "+" " ₹" + " " + NumberFormat('##,##,##,##,###').format(d['amount']),
                                   //text: '+ ₹' + d['amount'].toString(),
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -1164,8 +1066,7 @@ class AdvertisList extends StatelessWidget {
         body: Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        CustomMonthPicker(
-            myFunc: fc.fetchAdverList, selectedDate: fc.selectAdverTime),
+        CustomMonthPicker(myFunc: fc.fetchAdverList, selectedDate: fc.selectAdverTime),
         Expanded(
           child: GetBuilder<FundsController>(builder: (fc) {
             if (fc.AdverList.isEmpty) {
@@ -1179,8 +1080,7 @@ class AdvertisList extends StatelessWidget {
                     var d = fc.AdverList[index];
 
                     return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 5),
+                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                       child: GestureDetector(
                         onTap: fc.myBools[index] == true
                             ? () {
@@ -1194,8 +1094,7 @@ class AdvertisList extends StatelessWidget {
                                 fc.update();
 
                                 fc.userNames.value = "";
-                                List<String> userName =
-                                    d['multiple_user_name'].split(',');
+                                List<String> userName = d['multiple_user_name'].split(',');
                                 fc.userNames.value = userName.join(', ');
 
                                 fc.myBools[index] = !fc.myBools[index];
@@ -1205,12 +1104,9 @@ class AdvertisList extends StatelessWidget {
                           width: mySize.width,
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              boxShadow: const [
-                                BoxShadow(color: Colors.grey, blurRadius: 1)
-                              ],
+                              boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 1)],
                               borderRadius: BorderRadius.circular(10)),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                           duration: Duration(milliseconds: 300),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1234,10 +1130,7 @@ class AdvertisList extends StatelessWidget {
                                     ),
                                   ),
                                   DataText(
-                                    text: "+" " ₹" +
-                                        " " +
-                                        NumberFormat('##,##,##,##,###')
-                                            .format(d['amount']),
+                                    text: "+" " ₹" + " " + NumberFormat('##,##,##,##,###').format(d['amount']),
                                     //text: '+ ₹' + d['amount'].toString(),
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -1254,8 +1147,7 @@ class AdvertisList extends StatelessWidget {
                                         )
                                 ],
                               ),
-                              fromDateToDate(
-                                  mobile: d['to_date'], date: d['from_date']),
+                              fromDateToDate(mobile: d['to_date'], date: d['from_date']),
                               fc.myBools[index] == true
                                   ? DataText(
                                       text: '      All Users :-',
@@ -1266,8 +1158,7 @@ class AdvertisList extends StatelessWidget {
                                   : SizedBox(),
                               fc.myBools[index] == true
                                   ? Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20),
+                                      padding: const EdgeInsets.symmetric(horizontal: 20),
                                       child: Wrap(children: [
                                         DataText(
                                           text: fc.userNames.value.toString(),
@@ -1278,7 +1169,11 @@ class AdvertisList extends StatelessWidget {
                                       ]),
                                     )
                                   : SizedBox(),
-                              fc.myBools[index] == true? SizedBox(height: 8,):SizedBox(),
+                              fc.myBools[index] == true
+                                  ? SizedBox(
+                                      height: 8,
+                                    )
+                                  : SizedBox(),
                               fc.myBools[index] == true
                                   ? DataText(
                                       text: '      Description :-',
@@ -1289,14 +1184,14 @@ class AdvertisList extends StatelessWidget {
                                   : SizedBox(),
                               fc.myBools[index] == true
                                   ? Padding(
-                                    padding: EdgeInsets.only(left: 19),
-                                    child: DataText(
+                                      padding: EdgeInsets.only(left: 19),
+                                      child: DataText(
                                         text: "${d["description"]}",
                                         fontSize: 13,
                                         color: Colors.grey,
                                         fontWeight: FontWeight.w500,
                                       ),
-                                  )
+                                    )
                                   : SizedBox()
                             ],
                           ),
@@ -1315,11 +1210,7 @@ class AdvertisList extends StatelessWidget {
 ///////////////
 
 class myTappableContainer extends StatelessWidget {
-  const myTappableContainer(
-      {super.key,
-      required this.title,
-      required this.Condition,
-      required this.ontap});
+  const myTappableContainer({super.key, required this.title, required this.Condition, required this.ontap});
 
   final String title;
   final bool Condition;

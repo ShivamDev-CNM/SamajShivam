@@ -7,7 +7,6 @@ import 'package:samajapp/APIS/APIS.dart';
 import 'package:samajapp/Utils/SharedPrefunc.dart';
 import 'package:http/http.dart' as http;
 import 'package:video_player/video_player.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
 
 class Eventcontroller extends GetxController {
   @override
@@ -80,28 +79,54 @@ class Eventcontroller extends GetxController {
     }
   }
 
-  RxList<String> thumbnailList = <String>[].obs;
+  // RxList<String> thumbnailList = <String>[].obs;
+  //
+  // LoopIt() async {
+  //   thumbnailList.clear();
+  //   if (eventDetailData['multiple_event_video'].isNotEmpty) {
+  //     for (var video in eventDetailData['multiple_event_video']) {
+  //       String Thumb = await GetVideoThumbnail(video['video']);
+  //       thumbnailList.add(Thumb);
+  //     }
+  //   }
+  // }
+  //
+  //
+  // Future GetVideoThumbnail(String videoUrl) async {
+  //   // Get the temporary directory path
+  //   final tempDir = await getTemporaryDirectory();
+  //   final String thumbnailPath = "${tempDir.path}/thumbnails";
+  //
+  //   // Ensure the directory exists
+  //
+  //   // Create an instance of FcNativeVideoThumbnail
+  //   final fcNativeVideoThumbnail = FcNativeVideoThumbnail();
+  //
+  //   // Generate the thumbnail
+  //   final thumbnailFile = await fcNativeVideoThumbnail.getVideoThumbnail(
+  //     srcFile: videoUrl,              // Path to the video file
+  //     destFile: "$thumbnailPath/thumbnail.jpg", // Path for the output thumbnail
+  //     format: 'jpeg',         // Use ThumbType.jpeg for JPEG format
+  //     quality: 75,                    // Set quality (0-100)
+  //     height: 64,                     // Set the max height
+  //     width: 50,                    // Leave null to maintain aspect ratio
+  //   );
+  //
+  //   return thumbnailFile; // Return the generated thumbnail file path
+  // }
 
-  LoopIt() async {
-    thumbnailList.clear();
-    if (eventDetailData['multiple_event_video'].isNotEmpty) {
-      for (var video in eventDetailData['multiple_event_video']) {
-        String Thumb = await GetVideoThumbnail(video['video']);
-        thumbnailList.add(Thumb);
-      }
-    }
-  }
 
-  GetVideoThumbnail(videoUrl) async {
-    final fileName = await VideoThumbnail.thumbnailFile(
-      video: videoUrl,
-      thumbnailPath: (await getTemporaryDirectory()).path,
-      imageFormat: ImageFormat.JPEG,
-      maxHeight: 64,
-      quality: 75,
-    );
-    return fileName;
-  }
+
+  // GetVideoThumbnail(videoUrl) async {
+  //   final fileName = await VideoThumbnail.thumbnailFile(
+  //     video: videoUrl,
+  //     thumbnailPath: (await getTemporaryDirectory()).path,
+  //     imageFormat: ImageFormat.JPEG,
+  //     maxHeight: 64,
+  //     quality: 75,
+  //   );
+  //   return fileName;
+  // }
 
   String formatDuration(Duration duration) {
     String twoDigits(int n) {
