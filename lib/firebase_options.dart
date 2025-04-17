@@ -63,7 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '612759954483',
     projectId: 'samaj-app-6cf32',
     storageBucket: 'samaj-app-6cf32.appspot.com',
-    iosBundleId: 'com.example.samajapp',
+    iosBundleId: 'com.solankipariwar.app',
   );
 
 }

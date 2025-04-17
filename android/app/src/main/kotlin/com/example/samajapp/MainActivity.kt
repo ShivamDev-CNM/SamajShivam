@@ -1,4 +1,4 @@
-package com.example.samajapp
+package com.solankipariwar.app
 
 import io.flutter.embedding.android.FlutterActivity
 

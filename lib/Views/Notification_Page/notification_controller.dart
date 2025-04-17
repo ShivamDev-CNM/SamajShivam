@@ -26,7 +26,7 @@ class NotificationController extends GetxController {
     try {
       //isLoading(true);
       final response = await http.get(
-        Uri.parse('https://samaj.edigillence.com/api/notification_list'),
+        Uri.parse(myApi.notificationFetchAPI),
         headers: {
           "x-api-key": accesstoken.value, // If you have an auth token
         },
@@ -44,22 +44,23 @@ class NotificationController extends GetxController {
       isLoading(false);
     }
   }
+
   void onClose() {
     super.onClose();
     // Reset the state when the screen is closed
     isFirstSelection.value = false;
     selectedIndex.clear();
   }
+
   Future<void> deleteNotification(String notificationId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     accesstoken.value = prefs.getString("token") ?? "";
-    final url = Uri.parse(
-        'https://samaj.edigillence.com/api/delete_notification?is_deleted=$notificationId');
+    final url =
+        Uri.parse('${myApi.deleteNotificationAPI}?is_deleted=$notificationId');
 
     try {
       final response = await http.post(
-        Uri.parse(myApi.BaseUrl +
-            "/api/delete_notification?is_deleted=$notificationId"),
+        Uri.parse("${myApi.deleteNotificationAPI}?is_deleted=$notificationId"),
         headers: {
           "x-api-key": accesstoken.value, // If you have an auth token
         },
@@ -84,9 +85,9 @@ class NotificationController extends GetxController {
         .get(Uri.parse(myApi.BaseUrl + "/api/notification_dote"), headers: {
       "x-api-key": accesstoken.value, // If you have an auth token
     });
-    if(response.statusCode==200){
+    if (response.statusCode == 200) {
       print("Successfully Update ");
-    }else{
+    } else {
       print(response.body);
     }
   }

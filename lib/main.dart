@@ -16,6 +16,7 @@ import 'Views/Notification_Page/notification_controller.dart';
 
 @pragma('vm:entry-point')
 
+
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 }
@@ -62,7 +63,7 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       initialBinding: initialBinding(),
       debugShowCheckedModeBanner: false,
-      title: 'Solanki Pariwar',
+      title: 'Solanki Parivar',
       theme: ThemeData(
         scaffoldBackgroundColor: backgroundColor,
         appBarTheme: const AppBarTheme(

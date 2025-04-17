@@ -14,7 +14,6 @@ import '../Views/Notification_Page/notification_controller.dart';
 import 'colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-
   ProfileController pc = Get.find<ProfileController>();
   Homecontroller homecontroller = Get.find<Homecontroller>();
   final NotificationController controller = Get.find<NotificationController>();
@@ -26,8 +25,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.wantTextWhite = true,
       this.onPressed,
       this.widget,
-      this.wantbell = true}
-      );
+      this.wantbell = true});
 
   final String title;
   final bool wantBackButton;
@@ -241,7 +239,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       onPressed: () async {
                         // Navigate to the NotificationScreen
                         await controller.fetchNotificationList();
-                        await Get.to(NotificationScreen());
+                        await Get.to(() => NotificationScreen());
                         controller.selectedIndex.clear();
                         controller.selectedIndex.refresh();
                         controller.isFirstSelection.value = false;
