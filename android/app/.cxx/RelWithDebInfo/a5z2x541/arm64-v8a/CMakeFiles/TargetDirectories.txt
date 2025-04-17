@@ -1,0 +1,2 @@
+/Users/shivam/StudioProjects/Samaj/android/app/.cxx/RelWithDebInfo/a5z2x541/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/shivam/StudioProjects/Samaj/android/app/.cxx/RelWithDebInfo/a5z2x541/arm64-v8a/CMakeFiles/rebuild_cache.dir

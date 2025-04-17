@@ -1,0 +1,2 @@
+/Users/shivam/StudioProjects/Samaj/android/app/.cxx/Debug/i1d6n5q6/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/shivam/StudioProjects/Samaj/android/app/.cxx/Debug/i1d6n5q6/arm64-v8a/CMakeFiles/rebuild_cache.dir
