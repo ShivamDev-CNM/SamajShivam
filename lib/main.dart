@@ -27,9 +27,7 @@ void main() async {
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  // Platform.isIOS
-  //     ? await NotificationServices()
-  //     : await myNotification().initialize();
+
 
   Get.put(SplashScreenController());
   Get.put(ProfileController());
