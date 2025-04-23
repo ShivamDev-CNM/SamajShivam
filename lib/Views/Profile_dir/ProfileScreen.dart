@@ -1161,31 +1161,31 @@ class DetailPage extends StatelessWidget {
                 fontSize: 15,
                 fontWeight: FontWeight.w500,
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                    onPressed: () {
-                      Get.dialog(CustomAlert(
-                          title: 'Confirm Delete',
-                          content:
-                              'Are you sure you want to delete your account?',
-                          positiveText: 'Yes',
-                          onConfirm: () async {
-                            Get.back();
-                            Get.dialog(myCircular(), barrierDismissible: false);
-                            await Get.find<ProfileController>()
-                                .deleteAccountFunction();
-                            Get.back();
-                          },
-                          negativeText: 'No'));
-                    },
-                    child: DataText(
-                      text: 'Delete Account',
-                      fontSize: 15,
-                      color: Colors.red,
-                      fontWeight: FontWeight.w800,
-                    )),
-              ),
+              // Align(
+              //   alignment: Alignment.centerRight,
+              //   child: TextButton(
+              //       onPressed: () {
+              //         Get.dialog(CustomAlert(
+              //             title: 'Confirm Delete',
+              //             content:
+              //                 'Are you sure you want to delete your account?',
+              //             positiveText: 'Yes',
+              //             onConfirm: () async {
+              //               Get.back();
+              //               Get.dialog(myCircular(), barrierDismissible: false);
+              //               await Get.find<ProfileController>()
+              //                   .deleteAccountFunction();
+              //               Get.back();
+              //             },
+              //             negativeText: 'No'));
+              //       },
+              //       child: DataText(
+              //         text: 'Delete Account',
+              //         fontSize: 15,
+              //         color: Colors.red,
+              //         fontWeight: FontWeight.w800,
+              //       )),
+              // ),
               SizedBox(
                 height: 120,
               )

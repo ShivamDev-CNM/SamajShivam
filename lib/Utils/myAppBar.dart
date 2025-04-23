@@ -119,88 +119,49 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   //color: Colors.red,
                   child: Column(
                     children: [
-                      GestureDetector(
-                        // onTap: () {
-                        //   _openGmail();
-                        // },
-                        onTap: () async {
-                          final email = d["email"];
-                          final Uri emailUri = Uri(
-                            scheme: 'mailto',
-                            path: email,
-                          );
-
-                          if (await canLaunchUrl(emailUri)) {
-                            await launchUrl(emailUri);
-                          } else {
-                            Get.snackbar(
-                              'Error',
-                              'Could not open email client',
-                              snackPosition: SnackPosition.BOTTOM,
-                            );
-                          }
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.email_outlined,
-                              color: Colors.black,
-                              size: 25,
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              d["email"],
-                              style: GoogleFonts.dmSans(
-                                  color: Colors.blue,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w800),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      GestureDetector(
-                        onTap: () async {
-                          final phoneNumber = d["phone"];
-                          final Uri phoneUri =
-                              Uri(scheme: 'tel', path: phoneNumber);
-
-                          if (await canLaunchUrl(phoneUri)) {
-                            await launchUrl(phoneUri);
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                  content:
-                                      Text('Could not launch $phoneNumber')),
-                            );
-                          }
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.phone,
-                              color: Colors.black,
-                              size: 25,
-                            ),
-                            SizedBox(width: 8),
-                            Text(
-                              d["phone"] ?? "No Number",
-                              style: GoogleFonts.dmSans(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.email_outlined,
+                            color: Colors.black,
+                            size: 25,
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            d["email"],
+                            style: GoogleFonts.dmSans(
                                 color: Colors.blue,
                                 fontSize: 16,
-                                fontWeight: FontWeight.w800,
-                              ),
+                                fontWeight: FontWeight.w800),
+                          ),
+                        ],
+                      ),
+                     const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.phone,
+                            color: Colors.black,
+                            size: 25,
+                          ),
+                          SizedBox(width: 8),
+                          Text(
+                            d["phone"] ?? "No Number",
+                            style: GoogleFonts.dmSans(
+                              color: Colors.blue,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w800,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
